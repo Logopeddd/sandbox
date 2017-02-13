@@ -1,0 +1,12 @@
+$ git log
+commit ba71c272bcce92e476d9d14bef6c6c9d76a64c5f
+Author: Eugene <hadanyonok@gmail.com>
+Date:   Tue Feb 14 01:18:38 2017 +0300
+
+    status.txt
+
+commit feff21b8df5733e55ae1741f556e62a1c435e056
+Author: Eugene <hadanyonok@gmail.com>
+Date:   Tue Feb 14 01:17:40 2017 +0300
+
+    add .gitignore
