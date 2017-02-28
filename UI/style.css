@@ -25,12 +25,14 @@ p{
     cursor: pointer;
 }
 .header{
-    width: 100%;
+    width:100%;
+    min-width: 1000px;
     height: 120px;
 }
 .center {
     position:relative;
-    width: 1000px;
+    width:80%;
+    min-width: 1000px;
     height: inherit;
     margin: 0 auto 0 auto;
 
@@ -94,6 +96,7 @@ p{
 
 #top_menu>li:hover{
     background-color:#a8c6fa;
+    color:red;
 }
 
 #top_menu>li>a{
@@ -134,22 +137,24 @@ p{
 .content {
     position:relative;
     background-color: #ffffff;
-    width: 1000px;
+    width:88%;
+    min-width: 1000px;
     margin: 0 auto 0 auto;
+    text-align: center;
 }
-
 .tab{
+    position:relative;
     background-color: #f1f4f9;
     display: inline-block;
+    text-align: left;
     width:300px;
+    height: 450px;
     margin: 5px;
     padding:10px;
     vertical-align: top;
 }
 #main{
-    margin:5px 10px;
-    padding: 0;
-    width: 980px;
+    width: 970px;
     background:url(./img/mainpromo.jpg) no-repeat right center ;
 }
 #main>div{
@@ -162,14 +167,15 @@ p{
     font-size: 26px;
 }
 .author{
+    position: absolute;
+    right: 0;
     color:#7a7a7a;
-    float:right;
+    bottom:0;
 }
 #pagination{
-    position: absolute;
-    left: 0;
-    text-align: right;
-    font-size:17px;
+    text-align: center;
+    line-height: 450px;
+    font-size:30px;
 }
 #left{
     float: left;
