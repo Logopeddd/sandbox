@@ -164,10 +164,14 @@ var articles = [
 ];
 
 function getArticle(id) {
-    if (+id <= counter) {
-        console.log(articles[+id - 1])
-        return articles[+id - 1];
-    }
+    if (articles.some(function (item) {
+            if (item.id == id) {
+                console.log('getArticle: article' + id + ' ' + articles[articles.indexOf(item)].title + ' - was returned')
+                return articles[articles.indexOf(item)];
+            }
+            return false;
+        }))return true;
+    console.log('getArticle: article' + id + ' - not found')
     return null;
 }
 
@@ -177,45 +181,72 @@ function validateArticle(article) {
         typeof article.tags == "object" && article.tags.length >= 1 && article.tags.length <= 5 &&
         typeof article.author == "string" && article.author.length > 0 &&
         typeof article.content == "string" && article.content.length > 0 &&
-        typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100)
+        typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100) {
+        console.log('validateArticle:  article' + article.id + ' ' + article.title + ' - ok')
         return true;
+    }
+    console.log('validateArticle:  article' + article.id + ' ' + article.title + " - isn't ok")
     return false;
 }
 
 function addArticle(article) {
     if (validateArticle(article)) {
         articles[counter++] = article;
+        console.log('addArticle: article' + article.id + ' ' + article.title + ' - was added');
         return true;
     }
+    console.log('addArticle: article' + article.id + ' ' + article.title + " - wasn't added");
     return false;
 }
+
 function editArticle(id, article) {
-    if (+id > counter)
-        return false;
-    if (typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100) {
-        articles[+id - 1].title = article.title;
-    }
-    if (typeof article.content == "string" && article.content.length > 0) {
-        articles[+id - 1].content = article.content;
-    }
-    return true;
+    if (articles.some(function (item) {
+            if (item.id == id) {
+                if (typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100) {
+                    articles[articles.indexOf(item)].title = article.title;
+                    console.log('editArticle: article' + id + ' - title was edited');
+                }else console.log('editArticle: article' + id + " - title wasn't edited");
+                if (typeof article.content == "string" && article.content.length > 0) {
+                    articles.indexOf(item).content = article.content;
+                    console.log('editArticle: article' + id + ' - content was edited');
+                }else console.log('editArticle: article' + id + " - content wasn't edited");
+                return true;
+            }
+            return false;
+        })) return true;
+    console.log('editArticle: article' + id + " - wasn't found");
+    return false;
 }
 
 function removeArticle(id) {
-    if (+id > counter)
-        return false;
-    articles.splice(+id - 1, 1);
-    return true;
+    if (articles.some(function (item) {
+            if (+item.id == +id) {
+                articles.splice(articles.indexOf(item), 1);
+                console.log('removeArticle: article' + id + ' - was removed');
+                return true;
+            }
+            return false;
+        })) return true;
+    console.log('removeArticle: article' + id + " - wasn't removed");
+    return false;
 }
 
+//tests
 addArticle({
-    id: counter++,
+    id: ++counter,
     title: 'Trump lays out hike in military spending',
     content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
     createdAt: new Date('2017-02-27'),
     author: 'Eugene',
     tags: ['politics']
 });
+
+removeArticle(1);
+removeArticle(45);
+editArticle(2, {title: 'Hello world'});
+
+getArticle(200);
+editArticle(6, {title: ''});
 articles.forEach(function (item) {
     console.log(item.id + ' ' + item.title);
 });
