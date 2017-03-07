@@ -257,12 +257,7 @@ function getArticles(skip, top, filterConfig) {
     }
 
     filtered.sort(function (a, b) {
-        if (a.createdAt.getFullYear() < b.createdAt.getFullYear()) return 1;
-        if (a.createdAt.getFullYear() > b.createdAt.getFullYear()) return -1;
-        if (a.createdAt.getMonth() < b.createdAt.getMonth()) return 1;
-        if (a.createdAt.getMonth() > b.createdAt.getMonth()) return -1;
-        if (a.createdAt.getDate() < b.createdAt.getDate()) return 1;
-        if (a.createdAt.getDate() > b.createdAt.getDate()) return -1;
+        return b.createdAt-a.createdAt;
     });
     console.log('getArticles:');
     filtered.forEach(function (item) {
