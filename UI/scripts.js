@@ -305,6 +305,7 @@ var articleModel = (function () {
     }
 
     return {
+        counter:counter,
         tags: tags,
         articles: articles,
         getArticleslength: getArticleslength,
@@ -336,7 +337,7 @@ var articleRendering = (function () {
         content.firstElementChild.classList.add("main");
         if (i < articleModel.getArticleslength()) {
             var tab = document.createElement('div');
-            tab.innerHTML = '<div class="tab pagination"><a class="button">Show more...</a> </div>';
+            tab.innerHTML = '<div class="tab pagination"><a onclick="articleRendering.showMore()" class="button">Show more...</a> </div>';
             content.appendChild(tab.firstChild);
         }
     }
@@ -363,6 +364,20 @@ var articleRendering = (function () {
     };
 }());
 /*-------------------------------tests-------------------------------*/
+articleModel.addArticle({
+    id: ++articleModel.counter,
+    title: 'Trump lays out hike in military spending',
+    content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
+    createdAt: new Date('2017-02-27'),
+    author: 'Eugene',
+    img: './img/tab2.jpg',
+    tags: ['politics']
+});
+
+articleModel.removeArticle(3);
+articleModel.editArticle(2, {title: 'Hello world'});
+articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
+/////////////////////////////////////////////////////////
 articleRendering.show();
 articleRendering.signIn();
 //articleRendering.showMore();
