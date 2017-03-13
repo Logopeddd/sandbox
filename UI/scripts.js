@@ -94,7 +94,7 @@ var articleModel = (function () {
         },
         {
             id: ++counter,
-            title: '11.Aenean aliquam magna id nibh consectetur fringilla',
+            title: 'Aenean aliquam magna id nibh consectetur fringilla',
             createdAt: new Date('2017-02-27'),
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
