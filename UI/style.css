@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Comic Sans MS", Aclonica, cursive;
-    background-color: #e7effd;
+    background-image: url(./img/glass-pat-004.jpg);
 }
 
 h2 {
@@ -43,6 +43,14 @@ p {
 }
 
 #username {
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    color: #a8c6fa;
+    font-size: 16px;
+}
+
+#login {
     position: absolute;
     left: 10px;
     bottom: 5px;
@@ -177,7 +185,7 @@ ul.sub_menu {
 
 #content {
     position: relative;
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.9);
     width: 88%;
     min-width: 1000px;
     margin: 0 auto 0 auto;
@@ -185,8 +193,9 @@ ul.sub_menu {
 }
 
 .tab {
+    box-shadow: 0 0 4px 2px rgba(221, 221, 221, 1);
     position: relative;
-    background-color: #f1f4f9;
+    /*background-color: #f1f4f9;*/
     display: inline-block;
     text-align: left;
     width: 300px;
@@ -196,14 +205,19 @@ ul.sub_menu {
     vertical-align: top;
 }
 
+.tab > img {
+    width: 300px;
+    height: 200px;
+}
+
 .main {
-    width: 970px;
+    width: 960px;
     background: none;
 }
 
 .main > h2 {
     display: inline-block;
-    max-width: 360px;
+    max-width: 350px;
     margin: 0 5px;
     padding: 0;
     font-size: 40px;
@@ -227,15 +241,20 @@ ul.sub_menu {
 
 .author {
     position: absolute;
-    right: 0;
+    right: 15px;
     color: #7a7a7a;
-    bottom: 0;
+    bottom: 15px;
 }
 
 .pagination {
     text-align: center;
     line-height: 450px;
     font-size: 30px;
+}
+
+.footer {
+    height: 50px;
+    background-color: rgba(241, 244, 249, 0.8);
 }
 
 #left {
@@ -246,4 +265,12 @@ ul.sub_menu {
 #right {
     float: right;
     text-align: right;
+}
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
 }
