@@ -337,4 +337,3 @@ function showArticles(){
     content.appendChild(tab.firstChild);
 }
 showArticles();
-content.firstChild.setAttribute("width", "970px");
