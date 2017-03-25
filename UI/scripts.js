@@ -194,15 +194,19 @@ var articleModel = (function () {
     ];
 
     function getArticle(id) {
-        if (articles.some(function (item) {
-                if (item.id == id) {
-                    console.log('getArticle: article' + id + ' ' + articles[articles.indexOf(item)].title + articles[articles.indexOf(item)].author + ' - was returned')
-                    return articles[articles.indexOf(item)];
-                }
-                return false;
-            }))return true;
-        console.log('getArticle: article' + id + ' - not found')
-        return null;
+        // if (articles.some(function (item) {
+        //         if (item.id == id) {
+        //             console.log('getArticle: article' + id + ' ' + articles[articles.indexOf(item)].title + articles[articles.indexOf(item)].author + ' - was returned')
+        //             return articles[articles.indexOf(item)];
+        //         }
+        //         return false;
+        //     }))return true;
+
+        var acticle = articles.filter((item) => {
+            return item.id === id;
+        })[0];
+        console.log('getArticle: article' + id + ' - not found');
+        return article;
     }
 
     function getArticleslength() {
@@ -229,7 +233,7 @@ var articleModel = (function () {
 
     function addArticle(article) {
         if (validateArticle(article)) {
-            articles[articles.length] = article;
+            articles.push(article);
             console.log('addArticle: article' + article.id + ' ' + article.title + article.author + ' - was added');
             return true;
         }
@@ -270,14 +274,10 @@ var articleModel = (function () {
     }
 
     function getArticles(skip, top, filterConfig) {
-        if (skip == undefined) {
-            skip = 0;
-        }
+        skip = skip || 0;
+        top = top || 10;
         if (skip > articles.length) {
             return null;
-        }
-        if (top == undefined) {
-            top = 10;
         }
         var filtered = articles.slice(skip, top + skip);
         if (typeof filterConfig.author == "string" && filterConfig.author.length > 0) {
@@ -286,7 +286,7 @@ var articleModel = (function () {
             });
         }
 
-        if (typeof filterConfig.createdAt == "object") {
+        if (filterConfig.createdAt instanceof Date) {
             filtered = filtered.filter(function (item) {
                 return (filterConfig.createdAt.getFullYear() == item.createdAt.getFullYear() &&
                 filterConfig.createdAt.getMonth() == item.createdAt.getMonth() &&
@@ -305,7 +305,7 @@ var articleModel = (function () {
     }
 
     return {
-        counter:counter,
+        counter: counter,
         tags: tags,
         articles: articles,
         getArticleslength: getArticleslength,
@@ -351,16 +351,26 @@ var articleRendering = (function () {
     }
 
     function signIn() {
-        var login = document.getElementById("login");
-        login.classList.add('invisible');
-        var username = document.getElementById("username");
-        username.classList.remove('invisible');
+        // var login = document.getElementById("login");
+        // login.classList.add('invisible');
+        // var username = document.getElementById("username");
+        // username.classList.remove('invisible');
+        var glass = document.getElementById("glass");
+        glass.classList.remove('invisible');
+        // glass.onclick = null;
+    }
+
+    function hide(event, id) {
+        var target = event.target;
+        if (target.id === id)
+            document.getElementById(id).classList.add('invisible');
     }
 
     return {
         show: show,
         showMore: showMore,
-        signIn: signIn
+        signIn: signIn,
+        hide: hide
     };
 }());
 /*-------------------------------tests-------------------------------*/
@@ -379,5 +389,5 @@ articleModel.editArticle(2, {title: 'Hello world'});
 articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
 /////////////////////////////////////////////////////////
 articleRendering.show();
-articleRendering.signIn();
+// articleRendering.signIn();
 //articleRendering.showMore();

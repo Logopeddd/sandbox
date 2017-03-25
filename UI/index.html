@@ -14,7 +14,7 @@
                 <a class="button">Add an article</a>
             </div>
             <div id="login">
-                <a class="button">Log in</a>
+                <a onclick="articleRendering.signIn()" class="button">Log in</a>
             </div>
             <div id="logo">
             </div>
@@ -50,12 +50,26 @@
 
 <div id="content">
 </div>
-
+<div id ="glass" class="invisible" onclick ="articleRendering.hide(event, 'glass')">
+    <div id="login-form">
+        <h1>АВТОРИЗАЦИЯ</h1>
+        <fieldset>
+            <form action="javascript:void(0);" method="get">
+                <input type="email" required value="Логин" onBlur="if(this.value=='')this.value='Логин'"
+                       onFocus="if(this.value=='Логин')this.value='' ">
+                <input type="password" required value="Пароль" onBlur="if(this.value=='')this.value='Пароль'"
+                       onFocus="if(this.value=='Пароль')this.value='' ">
+                <input type="submit" value="ВОЙТИ">
+            </form>
+        </fieldset>
+    </div>
+</div>
 <footer class="footer">
     <a id="left"><br>HNews, 13.03.2017</a>
     <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V.,5th group, II course</a>
 </footer>
 <script type="text/javascript" src="scripts.js"></script>
+
 </body>
 
 </html>
