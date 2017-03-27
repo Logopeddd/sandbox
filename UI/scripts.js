@@ -9,7 +9,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: "Barry Jenkins' Moonlight wins best picture at the Oscars after an error involving wrong envelopes.",
             img: './img/mainpromo.jpg',
-            tags: ['culture']
+            tag: ['culture']
         },
         {
             id: ++counter,
@@ -18,7 +18,7 @@ var articleModel = (function () {
             author: 'Pahom',
             content: 'Top of the list to find new, effective antibiotic treatments are bacteria that poison the blood.',
             img: './img/tab1.jpg',
-            tags: ['science']
+            tag: ['science']
         },
         {
             id: ++counter,
@@ -27,7 +27,7 @@ var articleModel = (function () {
             author: 'Pahom',
             content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
             img: './img/tab2.jpg',
-            tags: ['science']
+            tag: ['science']
         },
         {
             id: ++counter,
@@ -36,7 +36,7 @@ var articleModel = (function () {
             author: 'Pahom',
             content: "Sony's latest smartphone is capable of filming smooth slow-motion footage at four times the rate possible on Apple models.",
             img: './img/tab3.jpg',
-            tags: ['technology', 'science']
+            tag: ['technology', 'science']
         },
         {
             id: ++counter,
@@ -45,7 +45,7 @@ var articleModel = (function () {
             author: 'Pahom',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -54,7 +54,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -63,7 +63,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -72,7 +72,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -81,7 +81,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -90,7 +90,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -99,7 +99,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -108,7 +108,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -117,7 +117,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -126,7 +126,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -135,7 +135,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -144,7 +144,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -153,7 +153,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -162,7 +162,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -171,7 +171,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -180,7 +180,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         },
         {
             id: ++counter,
@@ -189,7 +189,7 @@ var articleModel = (function () {
             author: 'Eugene',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
             img: './img/lorem-ipsum.jpg',
-            tags: ['business', 'sport', 'culture']
+            tag: ['business', 'sport', 'culture']
         }
     ];
 
@@ -202,8 +202,8 @@ var articleModel = (function () {
         //         return false;
         //     }))return true;
 
-        var acticle = articles.filter((item) => {
-            return item.id === id;
+        var article = articles.filter((item) => {
+            return item.id == id;
         })[0];
         console.log('getArticle: article' + id + ' - not found');
         return article;
@@ -218,12 +218,12 @@ var articleModel = (function () {
     }
 
     function validateArticle(article) {
-        if (typeof article.id == "number" &&
-            typeof article.createdAt == "object" &&
-            typeof article.tags == "object" && article.tags.length >= 1 && article.tags.length <= 5 &&
-            typeof article.author == "string" && article.author.length > 0 &&
-            typeof article.content == "string" && article.content.length > 0 &&
-            typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100) {
+        if (typeof article.id == "number" /*&&
+         typeof article.createdAt == "object" &&
+         typeof article.tag == "object" && article.tag.length >= 1 && article.tag.length <= 5 &&
+         typeof article.author == "string" && article.author.length > 0 &&
+         typeof article.content == "string" && article.content.length > 0 &&
+         typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100*/) {
             console.log('validateArticle:  article' + article.id + ' ' + article.title + article.author + ' - ok')
             return true;
         }
@@ -322,7 +322,7 @@ var articleRendering = (function () {
     function showArticle(item) {
         var news = document.getElementById('news');
         var tab = document.createElement('div');
-        tab.innerHTML = '<div class="tab "><h2 class="button">' + item.title + '</h2><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span></div>';
+        tab.innerHTML = '<div class="tab resize" data-id='+item.id+'><h2 onclick = "articleRendering.detailView(this.parentNode)" class="button">' + item.title + '</h2><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span></div>';
         news.appendChild(tab.firstChild);
     }
 
@@ -338,7 +338,7 @@ var articleRendering = (function () {
         news.firstElementChild.classList.add("main");
         if (i < articleModel.getArticleslength()) {
             var tab = document.createElement('div');
-            tab.innerHTML = '<div class="tab pagination"><a onclick="articleRendering.showMore()" class="button">Show more...</a> </div>';
+            tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Show more...</a> </div>';
             news.appendChild(tab.firstChild);
         }
     }
@@ -370,14 +370,39 @@ var articleRendering = (function () {
     }
 
     function showAddPage() {
+        document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('news').classList.add('invisible');
+        document.getElementById('add-form').heading.value = "";
+        document.getElementById('add-form').paragraph.value = "";
+        document.getElementById('add-article').classList.remove('invisible');
+    }
+    function showEditPage(id) {
+        var item = articleModel.getArticle(id);
+        document.getElementById('article-tab').classList.add('invisible');
+        document.getElementById('add-article').childNodes[1].textContent = "Редактирование новости";
+        document.getElementById('news').classList.add('invisible');
+        document.getElementById('add-form').heading.value = item.title;
+        document.getElementById('add-form').image.value = item.img;
+        document.getElementById('add-form').paragraph.value = item.content;
         document.getElementById('add-article').classList.remove('invisible');
     }
 
     function main() {
+        document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('add-article').classList.add('invisible');
         document.getElementById('news').classList.remove('invisible');
         show();
+    }
+
+    function detailView(elem) {
+        document.getElementById('add-article').classList.add('invisible');
+        var item = articleModel.getArticle(elem.dataset.id);
+        // console.log(elem.dataset.id);
+        // var item = articleModel.articles[1];
+        var tab = document.getElementById('article-tab');
+        tab.innerHTML = '<h1>' + item.title + '</h1><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span> <input type="button" onclick="articleRendering.showEditPage('+item.id+')" value="Редактировать">';
+        document.getElementById('news').classList.add('invisible');
+        tab.classList.remove('invisible');
     }
 
     function add() {
@@ -387,8 +412,8 @@ var articleRendering = (function () {
             content: document.getElementById('add-form').paragraph.value,
             createdAt: new Date('2017-02-27'),
             author: document.getElementById('login-form').login.value,
-            img: './img/tab2.jpg',
-            tags: ['politics']
+            img: document.getElementById('add-form').image.value,
+            tag: ['politics']
         });
         main();
     }
@@ -406,6 +431,8 @@ var articleRendering = (function () {
         logIn: logIn,
         signIn: signIn,
         showAddPage: showAddPage,
+        showEditPage: showEditPage,
+        detailView:detailView,
         main: main,
         add: add,
         hide: hide
@@ -419,7 +446,7 @@ articleModel.addArticle({
     createdAt: new Date(),
     author: 'Eugene',
     img: './img/tab2.jpg',
-    tags: ['politics']
+    tag: ['politics']
 });
 
 articleModel.removeArticle(3);

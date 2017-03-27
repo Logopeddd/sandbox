@@ -122,7 +122,6 @@ ul.sub_menu {
     left: 0;
     list-style: none;
     background-color: rgba(241, 244, 249, 0.9);
-
 }
 
 .sub_menu > li {
@@ -242,12 +241,14 @@ ul.sub_menu {
 .main > img {
     display: inline-block;
     width: 60%;
+    max-width: 700px;
     float: right;
 }
 
 .main > p {
     display: inline-block;
-    width: 360px;
+    width: 40%;
+
     font-size: 28px;
 }
 
@@ -278,7 +279,7 @@ ul.sub_menu {
     right: 0;
     left: 0;
     bottom: 0;
-    min-width: 940px;
+    /*min-width: 940px;*/
     z-index:2;
     width:100%;
     height: 100%;
@@ -288,11 +289,11 @@ ul.sub_menu {
 #login-div {
     z-index:2;
     position: fixed;
-    top: 100px;
+    top: 25vh;
     left: calc(50% - 150px);
     background-color: #3d8af7;
     border-radius: 5px;
-    margin: 150px auto;
+    margin: 0 auto;
     width: 300px;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
@@ -363,14 +364,12 @@ ul.sub_menu {
 }
 
 #add-article {
-
     width: 80%;
     min-width: calc(940px - 2%);
     margin-left:auto;
     margin-right: auto;
     height: 600px;
     max-width: 1500px;
-
 }
 
 #add-article h1 {
@@ -384,7 +383,7 @@ ul.sub_menu {
     text-align: left;
     margin:1%;
     padding: 0 1%;
-    height: 450px;
+    height: 85%;
 }
 
 
@@ -392,9 +391,10 @@ ul.sub_menu {
     font: 16px Arial;
     border: 1px solid #a8c6fa;
     border-radius: 3px;
-    padding: 1%;
-    margin: 1% 2% ;
-    width: 240px;
+    padding: 10px;
+    margin: 10px 2%;
+    width: 94%;
+    height: 20px;
 }
 
 #add-article form textarea {
@@ -402,15 +402,16 @@ ul.sub_menu {
     resize: none;
     border: 1px solid #a8c6fa;
     border-radius: 3px;
-    padding: 1%;
-    margin: 1% 2% ;
+    padding: 10px;
+    margin: 10px 2% ;
     width: 94%;
-    height: 67%;
+    height: 300px;
 }
 
 #add-article form input[type="submit"] {
     font-family: "Comic Sans MS", Aclonica, cursive;
     position: absolute;
+    bottom:1%;
     right:1%;
     background-color: #ebebeb;
     border: none;
@@ -423,6 +424,32 @@ ul.sub_menu {
 }
 
 #add-article  form input[type="submit"]:hover {
+    background-color: #e0e0e0;
+}
+
+#article-tab {
+    width: 80%;
+    min-width: calc(940px - 2%);
+    margin-left:auto;
+    margin-right: auto;
+    height: 600px;
+    max-width: 1500px;
+}
+#article-tab input[type="button"] {
+    font-family: "Comic Sans MS", Aclonica, cursive;
+    position: absolute;
+    bottom:1%;
+    left:1%;
+    background-color: #ebebeb;
+    border: none;
+    border-radius: 3px;
+    color: #216bd4;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.5% 1%;
+}
+#article-tab input[type="button"]:hover {
     background-color: #e0e0e0;
 }
 
@@ -442,4 +469,10 @@ ul.sub_menu {
 
 .invisible {
     display: none;
+}
+.resize{
+    transition: all 0.1s;
+}
+.resize:hover{
+    transform: scale(1.02);
 }

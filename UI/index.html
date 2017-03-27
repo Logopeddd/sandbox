@@ -10,13 +10,13 @@
     <div class="block1">
         <div class="center">
             <div id="username" class="invisible">
-                <a name = "name"></a>
-                <a class="button" onclick ='articleRendering.showAddPage()'>Add an article</a>
+                <a name="name"></a>
+                <a class="button" onclick='articleRendering.showAddPage()'>Add an article</a>
             </div>
             <div id="login-button">
-                <a class = "button" onclick="articleRendering.logIn()" >Log in</a>
+                <a class="button" onclick="articleRendering.logIn()">Log in</a>
             </div>
-            <div id="logo" class="button" onclick="articleRendering.main()">
+            <div id="logo" class="resize button" onclick="articleRendering.main()">
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="center">
             <ul id="top_menu">
                 <li><a><img id="filter" src="./img/filter.png" width="20" height="20"
-                                              alt="filter"></a>
+                            alt="filter"></a>
                     <ul class="sub_menu">
                         <li><a href=#>filter 1</a></li>
                         <li><a href=#>filter 2</a></li>
@@ -48,31 +48,35 @@
     </div>
 </div>
 <div id="content">
-<div id="news">
-</div>
-
-<div id ="glass" class="invisible" onclick ="articleRendering.hide(event, 'glass')">
-    <div id="login-div">
-        <h1>АВТОРИЗАЦИЯ</h1>
-        <fieldset>
-            <form id = "login-form" action="javascript:articleRendering.signIn();" method="get">
-                <input name ="login" type="text" placeholder="Логин">
-                <input name ="password" type="password" placeholder="Пароль"
-                       onFocus="if(this.value=='Пароль')this.value='' ">
-                <input type="submit" value="ВОЙТИ">
-            </form>
-        </fieldset>
+    <div id="news">
     </div>
-</div>
 
-<div id="add-article"class="invisible tab">
-    <h1>Добавление новости</h1>
-        <form id = "add-form"  action="javascript:articleRendering.add();" method="get">
-            <input name ="heading" type="text" autocomplete="off" placeholder="Заголовок">
-            <textarea name ="paragraph"  autocomplete="off" placeholder="Описание новости"></textarea>
+    <div id="glass" class="invisible" onclick="articleRendering.hide(event, 'glass')">
+        <div id="login-div">
+            <h1>АВТОРИЗАЦИЯ</h1>
+            <fieldset>
+                <form id="login-form" action="javascript:articleRendering.signIn();" method="get">
+                    <input name="login" type="text" placeholder="Логин">
+                    <input name="password" type="password" placeholder="Пароль"
+                           onFocus="if(this.value=='Пароль')this.value='' ">
+                    <input type="submit" value="ВОЙТИ">
+                </form>
+            </fieldset>
+        </div>
+    </div>
+
+    <div id="add-article" class="invisible tab">
+        <h1>Добавление новости</h1>
+        <form id="add-form" action="javascript:articleRendering.add();" method="get">
+            <input name="heading" type="text" autocomplete="off" placeholder="Заголовок">
+            <input name="image" type="text" autocomplete="off" placeholder="Ссылка на изображение">
+            <textarea name="paragraph" autocomplete="off" placeholder="Описание новости"></textarea>
             <input type="submit" value="ОПУБЛИКОВАТЬ">
         </form>
-</div>
+    </div>
+    <div id="article-tab" class="invisible main tab">
+
+    </div>
 </div>
 <footer class="footer">
     <a id="left"><br>HNews, 25.03.2017</a>
