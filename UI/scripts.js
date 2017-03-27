@@ -320,45 +320,79 @@ var articleModel = (function () {
 }());
 var articleRendering = (function () {
     function showArticle(item) {
+        var news = document.getElementById('news');
         var tab = document.createElement('div');
         tab.innerHTML = '<div class="tab "><h2 class="button">' + item.title + '</h2><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span></div>';
-        content.appendChild(tab.firstChild);
+        news.appendChild(tab.firstChild);
     }
 
     function showFrom(first) {
-        var content = document.getElementById('content');
-        if (content.lastChild.classList && content.lastChild.classList.contains("pagination")) {
-            content.removeChild(content.lastChild);
+        var news = document.getElementById('news');
+        if (news.lastChild.classList && news.lastChild.classList.contains("pagination")) {
+            news.removeChild(news.lastChild);
         }
         var i;
         for (i = first; i < articleModel.getArticleslength() && i < first + 12; i++) {
             showArticle(articleModel.getArticlesAt(i));
         }
-        content.firstElementChild.classList.add("main");
+        news.firstElementChild.classList.add("main");
         if (i < articleModel.getArticleslength()) {
             var tab = document.createElement('div');
             tab.innerHTML = '<div class="tab pagination"><a onclick="articleRendering.showMore()" class="button">Show more...</a> </div>';
-            content.appendChild(tab.firstChild);
+            news.appendChild(tab.firstChild);
         }
     }
 
     function show() {
+        var news = document.getElementById('news');
+        while (news.firstElementChild)
+            news.removeChild(news.firstElementChild);
         showFrom(0);
     }
 
     function showMore() {
-        showFrom(content.childNodes.length - 2);
+        var news = document.getElementById('news');
+        showFrom(news.childNodes.length - 2);
+    }
+
+    function logIn() {
+
+        var glass = document.getElementById("glass");
+        glass.classList.remove('invisible');
     }
 
     function signIn() {
-        // var login = document.getElementById("login");
-        // login.classList.add('invisible');
-        // var username = document.getElementById("username");
-        // username.classList.remove('invisible');
-        var glass = document.getElementById("glass");
-        glass.classList.remove('invisible');
-        // glass.onclick = null;
+        document.getElementById("login-button").classList.add('invisible');
+        var username = document.getElementById("username");
+        username.firstElementChild.textContent = "HI, " + document.getElementById('login-form').login.value + ' |';
+        username.classList.remove('invisible');
+        document.getElementById('glass').classList.add('invisible');
     }
+
+    function showAddPage() {
+        document.getElementById('news').classList.add('invisible');
+        document.getElementById('add-article').classList.remove('invisible');
+    }
+
+    function main() {
+        document.getElementById('add-article').classList.add('invisible');
+        document.getElementById('news').classList.remove('invisible');
+        show();
+    }
+
+    function add() {
+        articleModel.addArticle({
+            id: ++articleModel.counter,
+            title: document.getElementById('add-form').heading.value,
+            content: document.getElementById('add-form').paragraph.value,
+            createdAt: new Date('2017-02-27'),
+            author: document.getElementById('login-form').login.value,
+            img: './img/tab2.jpg',
+            tags: ['politics']
+        });
+        main();
+    }
+
 
     function hide(event, id) {
         var target = event.target;
@@ -369,16 +403,20 @@ var articleRendering = (function () {
     return {
         show: show,
         showMore: showMore,
+        logIn: logIn,
         signIn: signIn,
+        showAddPage: showAddPage,
+        main: main,
+        add: add,
         hide: hide
     };
 }());
 /*-------------------------------tests-------------------------------*/
 articleModel.addArticle({
     id: ++articleModel.counter,
-    title: 'Trump lays out hike in military spending',
+    title: 'Trump ',
     content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
-    createdAt: new Date('2017-02-27'),
+    createdAt: new Date(),
     author: 'Eugene',
     img: './img/tab2.jpg',
     tags: ['politics']

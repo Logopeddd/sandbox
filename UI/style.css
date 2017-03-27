@@ -1,5 +1,8 @@
 body {
 position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
     font-family: "Comic Sans MS", Aclonica, cursive;
@@ -51,7 +54,7 @@ p {
     font-size: 16px;
 }
 
-#login {
+#login-button {
     position: absolute;
     left: 10px;
     bottom: 5px;
@@ -184,7 +187,16 @@ ul.sub_menu {
     background: url(./img/search_box.png) no-repeat -250px 3px;
 }
 
-#content {
+#news {
+    position: relative;
+    /*background: rgba(255, 255, 255, 0.9);*/
+    width: 100%;
+    min-width: 940px;
+    margin: 0 auto 0 auto;
+    text-align: center;
+}
+#content{
+    flex: 1 0 auto;
     position: relative;
     /*background: rgba(255, 255, 255, 0.9);*/
     width: 100%;
@@ -253,7 +265,10 @@ ul.sub_menu {
 }
 
 .footer {
+    flex: 0 0 auto;
     height: 50px;
+    width: 100%;
+    min-width: 940px;
     background-color: rgba(241, 244, 249, 0.8);
 }
 
@@ -267,10 +282,10 @@ ul.sub_menu {
     z-index:2;
     width:100%;
     height: 100%;
-    background: rgba(54,54,54,0.6);
+    background: rgba(54,54,54,0.7);
 }
 
-#login-form {
+#login-div {
     z-index:2;
     position: fixed;
     top: 100px;
@@ -281,13 +296,13 @@ ul.sub_menu {
     width: 300px;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
 
 }
 
-#login-form h1 {
+#login-div h1 {
     background-color: #216bd4;
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -296,18 +311,18 @@ ul.sub_menu {
     font-size: 14px;
 }
 
-#login-form fieldset {
+#login-div fieldset {
     border: none;
     padding: 20px;
     position: relative;
 }
 
-#login-form fieldset form {
+#login-div fieldset form {
     overflow: hidden;
     width: 270px;
 }
 
-#login-form fieldset form input {
+#login-div fieldset form input {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     outline: none;
@@ -316,22 +331,22 @@ ul.sub_menu {
 
 }
 
-#login-form fieldset form input[type="email"] {
+#login-div fieldset form input[type="text"] {
     border: 1px solid #a8c6fa;
-    border-radius: 3px 3px 0px 0px;
+    border-radius: 3px 3px 0 0;
     padding: 12px 10px;
     width: 238px;
 }
 
-#login-form fieldset form input[type="password"] {
+#login-div fieldset form input[type="password"] {
     border: 1px solid #a8c6fa;
     border-top: none;
-    border-radius: 0px 0px 3px 3px;
+    border-radius: 0 0 3px 3px;
     padding: 12px 10px;
     width: 238px;
 }
 
-#login-form fieldset form input[type="submit"] {
+#login-div fieldset form input[type="submit"] {
     background-color: #ebebeb;
     border: none;
     border-radius: 3px;
@@ -343,34 +358,72 @@ ul.sub_menu {
     padding: 12px 12px;
 }
 
-#login-form fieldset form input[type="submit"]:hover {
+#login-div fieldset form input[type="submit"]:hover {
     background-color: #e0e0e0;
 }
 
-#login-form fieldset form span:before {
-    background-color: #c9c9c9;
-    border-radius: 50%;
-    content: "?";
-    display: inline-block;
-    height: 20px;
-    line-height: 20px;
-    margin-right: 10px;
-    text-align: center;
-    width: 20px;
+#add-article {
+
+    width: 80%;
+    min-width: calc(940px - 2%);
+    margin-left:auto;
+    margin-right: auto;
+    height: 600px;
+    max-width: 1500px;
+
 }
 
-#login-form fieldset form span {
-    font-size: 12px;
-    margin-top: 40px;
+#add-article h1 {
+    text-align: left;
+    padding: 0.5%;
+    margin: 0.5% 3.5%;
 }
 
-#login-form fieldset form span a {
-    color: #eb6d1a;
-    text-decoration: none;
+#add-article form {
+    position: relative;
+    text-align: left;
+    margin:1%;
+    padding: 0 1%;
+    height: 450px;
 }
 
-#login-form fieldset form span a:hover {
-    color: #eb6d1a;
+
+#add-article form input[type="text"] {
+    font: 16px Arial;
+    border: 1px solid #a8c6fa;
+    border-radius: 3px;
+    padding: 1%;
+    margin: 1% 2% ;
+    width: 240px;
+}
+
+#add-article form textarea {
+    font: 16px Arial;
+    resize: none;
+    border: 1px solid #a8c6fa;
+    border-radius: 3px;
+    padding: 1%;
+    margin: 1% 2% ;
+    width: 94%;
+    height: 67%;
+}
+
+#add-article form input[type="submit"] {
+    font-family: "Comic Sans MS", Aclonica, cursive;
+    position: absolute;
+    right:1%;
+    background-color: #ebebeb;
+    border: none;
+    border-radius: 3px;
+    color: #216bd4;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.5% 1%;
+}
+
+#add-article  form input[type="submit"]:hover {
+    background-color: #e0e0e0;
 }
 
 #left {
