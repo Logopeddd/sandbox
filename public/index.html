@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div id="add-article" class="invisible tab">
+    <div id="add-article" class="invisible edit tab ">
         <h1>Добавление новости</h1>
         <form id="add-form" action="javascript:articleRendering.add();" method="get">
             <input name="heading" type="text" autocomplete="off" placeholder="Заголовок">
@@ -75,7 +75,15 @@
         </form>
     </div>
     <div id="article-tab" class="invisible main tab">
-
+    </div>
+    <div id="edit-article" class="invisible edit tab">
+        <h1>Редактирование новости</h1>
+        <form id="edit-form" method="get">
+            <input name="heading" type="text" autocomplete="off" placeholder="Заголовок">
+            <input name="image" type="text" autocomplete="off" placeholder="Ссылка на изображение">
+            <textarea name="paragraph" autocomplete="off" placeholder="Описание новости"></textarea>
+            <input type="submit" value="ОПУБЛИКОВАТЬ">
+        </form>
     </div>
 </div>
 <footer class="footer">

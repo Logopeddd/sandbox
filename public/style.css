@@ -363,7 +363,7 @@ ul.sub_menu {
     background-color: #e0e0e0;
 }
 
-#add-article {
+.edit{
     width: 80%;
     min-width: calc(940px - 2%);
     margin-left:auto;
@@ -372,13 +372,13 @@ ul.sub_menu {
     max-width: 1500px;
 }
 
-#add-article h1 {
+.edit h1 {
     text-align: left;
     padding: 0.5%;
     margin: 0.5% 3.5%;
 }
 
-#add-article form {
+.edit form {
     position: relative;
     text-align: left;
     margin:1%;
@@ -387,7 +387,7 @@ ul.sub_menu {
 }
 
 
-#add-article form input[type="text"] {
+.edit form input[type="text"] {
     font: 16px Arial;
     border: 1px solid #a8c6fa;
     border-radius: 3px;
@@ -397,7 +397,7 @@ ul.sub_menu {
     height: 20px;
 }
 
-#add-article form textarea {
+.edit form textarea {
     font: 16px Arial;
     resize: none;
     border: 1px solid #a8c6fa;
@@ -408,7 +408,7 @@ ul.sub_menu {
     height: 300px;
 }
 
-#add-article form input[type="submit"] {
+.edit form input[type="submit"] {
     font-family: "Comic Sans MS", Aclonica, cursive;
     position: absolute;
     bottom:1%;
@@ -423,7 +423,7 @@ ul.sub_menu {
     padding: 0.5% 1%;
 }
 
-#add-article  form input[type="submit"]:hover {
+.edit form input[type="submit"]:hover {
     background-color: #e0e0e0;
 }
 
@@ -461,6 +461,9 @@ ul.sub_menu {
 #right {
     float: right;
     text-align: right;
+}
+.admin-button{
+    visibility: hidden;
 }
 
 .visible {

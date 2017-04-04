@@ -193,6 +193,19 @@ var articleModel = (function () {
         }
     ];
 
+    function storageArticles() {
+        localStorage.setItem("tags", JSON.stringify(tags));
+        localStorage.setItem("articles", JSON.stringify(articles));
+    }
+
+    function refreshArticles() {
+        articles = JSON.parse(localStorage.getItem('articles'));
+        for (var i = 0; i < articles.length; i++)
+            articles[i].createdAt = new Date(articles[i].createdAt);
+        tags = JSON.parse(localStorage.getItem("tags"));
+    }
+
+
     function getArticle(id) {
         // if (articles.some(function (item) {
         //         if (item.id == id) {
@@ -235,6 +248,7 @@ var articleModel = (function () {
         if (validateArticle(article)) {
             articles.push(article);
             console.log('addArticle: article' + article.id + ' ' + article.title + article.author + ' - was added');
+            storageArticles();
             return true;
         }
         console.log('addArticle: article' + article.id + ' ' + article.title + article.author + " - wasn't added");
@@ -249,9 +263,14 @@ var articleModel = (function () {
                         console.log('editArticle: article' + id + ' - title was edited');
                     } else console.log('editArticle: article' + id + " - title wasn't edited");
                     if (typeof article.content == "string" && article.content.length > 0) {
-                        articles.indexOf(item).content = article.content;
+                        articles[articles.indexOf(item)].content = article.content;
                         console.log('editArticle: article' + id + ' - content was edited');
                     } else console.log('editArticle: article' + id + " - content wasn't edited");
+                    if (typeof article.img == "string" && article.img.length > 0) {
+                        articles[articles.indexOf(item)].img = article.img;
+                        console.log('editArticle: article' + id + ' - img was edited');
+                    } else console.log('editArticle: article' + id + " - img wasn't edited");
+                    storageArticles();
                     return true;
                 }
                 return false;
@@ -265,6 +284,7 @@ var articleModel = (function () {
                 if (item.id == id) {
                     articles.splice(articles.indexOf(item), 1);
                     console.log('removeArticle: article' + id + ' - was removed');
+                    storageArticles();
                     return true;
                 }
                 return false;
@@ -308,6 +328,8 @@ var articleModel = (function () {
         counter: counter,
         tags: tags,
         articles: articles,
+        storageArticles: storageArticles,
+        refreshArticles: refreshArticles,
         getArticleslength: getArticleslength,
         getArticlesAt: getArticlesAt,
         getArticle: getArticle,
@@ -322,7 +344,7 @@ var articleRendering = (function () {
     function showArticle(item) {
         var news = document.getElementById('news');
         var tab = document.createElement('div');
-        tab.innerHTML = '<div class="tab resize" data-id='+item.id+'><h2 onclick = "articleRendering.detailView(this.parentNode)" class="button">' + item.title + '</h2><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span></div>';
+        tab.innerHTML = '<div class="tab resize" data-id=' + item.id + '><h2 onclick = "articleRendering.detailView(this.parentNode)" class="button">' + item.title + '</h2><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span></div>';
         news.appendChild(tab.firstChild);
     }
 
@@ -367,29 +389,38 @@ var articleRendering = (function () {
         username.firstElementChild.textContent = "HI, " + document.getElementById('login-form').login.value + ' |';
         username.classList.remove('invisible');
         document.getElementById('glass').classList.add('invisible');
+        var buttons = document.getElementsByClassName('admin-button');
+        for (var i = 0; i < buttons.length; i++)
+            buttons[i].style.visibility = 'visible'
+
     }
 
     function showAddPage() {
+        document.getElementById('edit-article').classList.add('invisible');
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('news').classList.add('invisible');
         document.getElementById('add-form').heading.value = "";
+        document.getElementById('add-form').image.value = "";
         document.getElementById('add-form').paragraph.value = "";
         document.getElementById('add-article').classList.remove('invisible');
     }
+
     function showEditPage(id) {
         var item = articleModel.getArticle(id);
         document.getElementById('article-tab').classList.add('invisible');
-        document.getElementById('add-article').childNodes[1].textContent = "Редактирование новости";
-        document.getElementById('news').classList.add('invisible');
-        document.getElementById('add-form').heading.value = item.title;
-        document.getElementById('add-form').image.value = item.img;
-        document.getElementById('add-form').paragraph.value = item.content;
-        document.getElementById('add-article').classList.remove('invisible');
+        // document.getElementById('news').classList.add('invisible');
+        // document.getElementById('add-article').classList.add('invisible');
+        document.getElementById('edit-form').heading.value = item.title;
+        document.getElementById('edit-form').image.value = item.img;
+        document.getElementById('edit-form').paragraph.value = item.content;
+        document.getElementById('edit-form').setAttribute('action', 'javascript:articleRendering.edit(' + id + ')');
+        document.getElementById('edit-article').classList.remove('invisible');
     }
 
     function main() {
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('add-article').classList.add('invisible');
+        document.getElementById('edit-article').classList.add('invisible');
         document.getElementById('news').classList.remove('invisible');
         show();
     }
@@ -397,11 +428,12 @@ var articleRendering = (function () {
     function detailView(elem) {
         document.getElementById('add-article').classList.add('invisible');
         var item = articleModel.getArticle(elem.dataset.id);
-        // console.log(elem.dataset.id);
-        // var item = articleModel.articles[1];
         var tab = document.getElementById('article-tab');
-        tab.innerHTML = '<h1>' + item.title + '</h1><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span> <input type="button" onclick="articleRendering.showEditPage('+item.id+')" value="Редактировать">';
+        tab.innerHTML = '<h1>' + item.title + '</h1><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span> <input class = "admin-button" type="button" onclick="articleRendering.showEditPage(' + item.id + ')" value="Редактировать">';
         document.getElementById('news').classList.add('invisible');
+        // var buttons = document.getElementsByClassName('admin-button');
+        // for (var i = 0; i < buttons.length; i++)
+        //     buttons[i].style.visibility = 'visible'
         tab.classList.remove('invisible');
     }
 
@@ -414,6 +446,16 @@ var articleRendering = (function () {
             author: document.getElementById('login-form').login.value,
             img: document.getElementById('add-form').image.value,
             tag: ['politics']
+        });
+        main();
+    }
+
+    function edit(id) {
+        articleModel.editArticle(id, {
+            title: document.getElementById('edit-form').heading.value,
+            content: document.getElementById('edit-form').paragraph.value,
+            img: document.getElementById('edit-form').image.value,
+            // tag: ['politics']
         });
         main();
     }
@@ -432,27 +474,33 @@ var articleRendering = (function () {
         signIn: signIn,
         showAddPage: showAddPage,
         showEditPage: showEditPage,
-        detailView:detailView,
+        detailView: detailView,
         main: main,
         add: add,
+        edit: edit,
         hide: hide
     };
+
 }());
 /*-------------------------------tests-------------------------------*/
-articleModel.addArticle({
-    id: ++articleModel.counter,
-    title: 'Trump ',
-    content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
-    createdAt: new Date(),
-    author: 'Eugene',
-    img: './img/tab2.jpg',
-    tag: ['politics']
-});
+/*articleModel.addArticle({
+ id: ++articleModel.counter,
+ title: 'Trump ',
+ content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
+ createdAt: new Date(),
+ author: 'Eugene',
+ img: './img/tab2.jpg',
+ tag: ['politics']
+ });*/
 
-articleModel.removeArticle(3);
-articleModel.editArticle(2, {title: 'Hello world'});
-articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
+//articleModel.removeArticle(3);
+//articleModel.editArticle(2, {title: 'Hello world'});
+//articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
 /////////////////////////////////////////////////////////
+if (!localStorage.getItem("articles")) {
+    articleModel.storageArticles();
+} else
+    articleModel.refreshArticles();
 articleRendering.show();
 // articleRendering.signIn();
 //articleRendering.showMore();
