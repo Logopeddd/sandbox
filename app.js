@@ -1,25 +1,42 @@
-var express = require('express');
+let express = require('express');
+let app = express();
+let db = require('diskdb');
+db.connect('./DataBase', ['articles'])
+let bodyParser = require('body-parser');
 
+app.set('port', (process.env.PORT || 3000));
 
-var app = express();
+app.use(express.static(__dirname + '/public'));
 
+app.use(bodyParser.json());
 
-app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
 
-
-app.get('/hello', function (req, res) {
-
-
-res.send('Hello World!');
-
-
+app.listen(app.get('port'), function () {
+    console.log("Server started", app.get('port'));
 });
 
+app.get('/articles', function (rec, res) {
+    res.json(db.articles.find())
+});
 
-app.listen(3000, function () {
+app.get('/articles/:id', function (req, res) {
+    res.json(db.articles.findOne({id: req.params.id}));
+});
 
+app.put('/articles', function (req, res) {
+    res.json(db.articles.save(req.body));
+});
 
-console.log('Example app listening on port 3000!')
+app.delete('/articles/:id', function (req, res) {
+    res.json(db.articles.remove({id: req.params.id}));
+});
 
-
+app.patch('/:id', function (req, res) {
+    let options = {
+        multi: false,
+        upsert: false
+    };
+    let query = db.articles.findOne({id: req.params.id});
+    res.json(db.articles.update(query, req.body, options));
 });
