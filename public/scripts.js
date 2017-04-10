@@ -2,209 +2,226 @@ var articleModel = (function () {
     var counter = 0;
     var tags = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
     var articles = [
-        {
-            id: ++counter,
-            title: 'MOONLIGHT MIX-UP STUNS OSCAR CEREMONY',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: "Barry Jenkins' Moonlight wins best picture at the Oscars after an error involving wrong envelopes.",
-            img: './img/mainpromo.jpg',
-            tag: ['culture']
-        },
-        {
-            id: ++counter,
-            title: "WHO lists 'most threatening' superbugs",
-            createdAt: new Date('2017-03-24T23:00:00'),
-            author: 'Pahom',
-            content: 'Top of the list to find new, effective antibiotic treatments are bacteria that poison the blood.',
-            img: './img/tab1.jpg',
-            tag: ['science']
-        },
-        {
-            id: ++counter,
-            title: "Trump lays out hike in military spending",
-            createdAt: new Date('2017-03-24T23:00:00'),
-            author: 'Pahom',
-            content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
-            img: './img/tab2.jpg',
-            tag: ['science']
-        },
-        {
-            id: ++counter,
-            title: 'Sony launches super-slow-motion phone',
-            createdAt: new Date('2017-03-28'),
-            author: 'Pahom',
-            content: "Sony's latest smartphone is capable of filming smooth slow-motion footage at four times the rate possible on Apple models.",
-            img: './img/tab3.jpg',
-            tag: ['technology', 'science']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-03-29'),
-            author: 'Pahom',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-03-30'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        },
-        {
-            id: ++counter,
-            title: 'Aenean aliquam magna id nibh consectetur fringilla',
-            createdAt: new Date('2017-02-27'),
-            author: 'Eugene',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
-            img: './img/lorem-ipsum.jpg',
-            tag: ['business', 'sport', 'culture']
-        }
+        // {
+        //     id: ++counter,
+        //     title: 'MOONLIGHT MIX-UP STUNS OSCAR CEREMONY',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: "Barry Jenkins' Moonlight wins best picture at the Oscars after an error involving wrong envelopes.",
+        //     img: './img/mainpromo.jpg',
+        //     tag: ['culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: "WHO lists 'most threatening' superbugs",
+        //     createdAt: new Date('2017-03-24T23:00:00'),
+        //     author: 'Pahom',
+        //     content: 'Top of the list to find new, effective antibiotic treatments are bacteria that poison the blood.',
+        //     img: './img/tab1.jpg',
+        //     tag: ['science']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: "Trump lays out hike in military spending",
+        //     createdAt: new Date('2017-03-24T23:00:00'),
+        //     author: 'Pahom',
+        //     content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
+        //     img: './img/tab2.jpg',
+        //     tag: ['science']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Sony launches super-slow-motion phone',
+        //     createdAt: new Date('2017-03-28'),
+        //     author: 'Pahom',
+        //     content: "Sony's latest smartphone is capable of filming smooth slow-motion footage at four times the rate possible on Apple models.",
+        //     img: './img/tab3.jpg',
+        //     tag: ['technology', 'science']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-03-29'),
+        //     author: 'Pahom',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-03-30'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // },
+        // {
+        //     id: ++counter,
+        //     title: 'Aenean aliquam magna id nibh consectetur fringilla',
+        //     createdAt: new Date('2017-02-27'),
+        //     author: 'Eugene',
+        //     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.',
+        //     img: './img/lorem-ipsum.jpg',
+        //     tag: ['business', 'sport', 'culture']
+        // }
     ];
+    var user;
 
     function storageArticles() {
-        localStorage.setItem("tags", JSON.stringify(tags));
-        localStorage.setItem("articles", JSON.stringify(articles));
+        // localStorage.setItem("tags", JSON.stringify(tags));
+        // localStorage.setItem("articles", JSON.stringify(articles));
+        localStorage.setItem("user", getUser());
     }
 
     function refreshArticles() {
-        articles = JSON.parse(localStorage.getItem('articles'));
-        for (var i = 0; i < articles.length; i++)
-            articles[i].createdAt = new Date(articles[i].createdAt);
-        tags = JSON.parse(localStorage.getItem("tags"));
+        // articles = JSON.parse(localStorage.getItem('articles'));
+        // for (var i = 0; i < articles.length; i++)
+        //     articles[i].createdAt = new Date(articles[i].createdAt);
+        // tags = JSON.parse(localStorage.getItem('tags'));
+        setUser(localStorage.getItem('user'));
     }
 
+    function replaceArticles() {
+        articles = JSON.parse(dbModel.getArray());
+        for (var i = 0; i < articles.length; i++)
+            articles[i].createdAt = new Date(articles[i].createdAt);
+        articles.sort((a, b) => b.createdAt - a.createdAt);
+    }
+
+    function setUser(username) {
+        user = username;
+    }
+
+    function getUser() {
+        return user;
+    }
 
     function getArticle(id) {
         // if (articles.some(function (item) {
@@ -246,9 +263,10 @@ var articleModel = (function () {
 
     function addArticle(article) {
         if (validateArticle(article)) {
-            articles.push(article);
+            dbModel.addArticle(article);
+            replaceArticles();
             console.log('addArticle: article' + article.id + ' ' + article.title + article.author + ' - was added');
-            storageArticles();
+
             return true;
         }
         console.log('addArticle: article' + article.id + ' ' + article.title + article.author + " - wasn't added");
@@ -270,11 +288,14 @@ var articleModel = (function () {
                         articles[articles.indexOf(item)].img = article.img;
                         console.log('editArticle: article' + id + ' - img was edited');
                     } else console.log('editArticle: article' + id + " - img wasn't edited");
-                    storageArticles();
+                    // storageArticles();
                     return true;
                 }
                 return false;
-            })) return true;
+            })) {
+            dbModel.editArticle(article);
+            return true;
+        }
         console.log('editArticle: article' + id + " - wasn't found");
         return false;
     }
@@ -284,7 +305,7 @@ var articleModel = (function () {
                 if (item.id == id) {
                     articles.splice(articles.indexOf(item), 1);
                     console.log('removeArticle: article' + id + ' - was removed');
-                    storageArticles();
+                    // storageArticles();
                     return true;
                 }
                 return false;
@@ -327,6 +348,10 @@ var articleModel = (function () {
     return {
         counter: counter,
         tags: tags,
+        user: user,
+        replaceArticles,
+        setUser: setUser,
+        getUser: getUser,
         articles: articles,
         storageArticles: storageArticles,
         refreshArticles: refreshArticles,
@@ -385,14 +410,17 @@ var articleRendering = (function () {
 
     function signIn() {
         document.getElementById("login-button").classList.add('invisible');
+        articleModel.setUser(document.getElementById('login-form').login.value);
+        articleModel.storageArticles();
         var username = document.getElementById("username");
-        username.firstElementChild.textContent = "HI, " + document.getElementById('login-form').login.value + ' |';
+        username.firstElementChild.textContent = "HI, " + articleModel.user + ' |';
         username.classList.remove('invisible');
+        btnCheck();
         document.getElementById('glass').classList.add('invisible');
-        var buttons = document.getElementsByClassName('admin-button');
-        for (var i = 0; i < buttons.length; i++)
-            buttons[i].style.visibility = 'visible'
 
+        // var buttons = document.getElementsByClassName('admin-button');
+        // for (var i = 0; i < buttons.length; i++)
+        //     buttons[i].style.visibility = 'visible'
     }
 
     function showAddPage() {
@@ -431,9 +459,7 @@ var articleRendering = (function () {
         var tab = document.getElementById('article-tab');
         tab.innerHTML = '<h1>' + item.title + '</h1><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span> <input class = "admin-button" type="button" onclick="articleRendering.showEditPage(' + item.id + ')" value="Редактировать">';
         document.getElementById('news').classList.add('invisible');
-        // var buttons = document.getElementsByClassName('admin-button');
-        // for (var i = 0; i < buttons.length; i++)
-        //     buttons[i].style.visibility = 'visible'
+        btnCheck();
         tab.classList.remove('invisible');
     }
 
@@ -442,22 +468,36 @@ var articleRendering = (function () {
             id: ++articleModel.counter,
             title: document.getElementById('add-form').heading.value,
             content: document.getElementById('add-form').paragraph.value,
-            createdAt: new Date('2017-02-27'),
-            author: document.getElementById('login-form').login.value,
+            createdAt: new Date(),
+            author: articleModel.getUser(),
             img: document.getElementById('add-form').image.value,
             tag: ['politics']
         });
+        // articleModel.refreshArticles();
         main();
     }
 
     function edit(id) {
-        articleModel.editArticle(id, {
-            title: document.getElementById('edit-form').heading.value,
-            content: document.getElementById('edit-form').paragraph.value,
-            img: document.getElementById('edit-form').image.value,
-            // tag: ['politics']
-        });
+        var article = articleModel.getArticle(id);
+        article.title = document.getElementById('edit-form').heading.value;
+        article.content = document.getElementById('edit-form').paragraph.value;
+        article.img = document.getElementById('edit-form').image.value;
+        // article.tag =
+        articleModel.editArticle(id, article);
+        // articleModel.refreshArticles();
         main();
+    }
+
+    function btnCheck() {
+        if (articleModel.getUser()) {
+            document.getElementById("login-button").classList.add('invisible');
+            var username = document.getElementById("username");
+            username.firstElementChild.textContent = "HI, " + articleModel.getUser() + ' |';
+            username.classList.remove('invisible');
+            var buttons = document.getElementsByClassName('admin-button');
+            for (var i = 0; i < buttons.length; i++)
+                buttons[i].style.visibility = 'visible'
+        }
     }
 
 
@@ -468,6 +508,7 @@ var articleRendering = (function () {
     }
 
     return {
+        btnCheck: btnCheck,
         show: show,
         showMore: showMore,
         logIn: logIn,
@@ -480,7 +521,6 @@ var articleRendering = (function () {
         edit: edit,
         hide: hide
     };
-
 }());
 /*-------------------------------tests-------------------------------*/
 /*articleModel.addArticle({
@@ -497,10 +537,15 @@ var articleRendering = (function () {
 //articleModel.editArticle(2, {title: 'Hello world'});
 //articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
 /////////////////////////////////////////////////////////
-if (!localStorage.getItem("articles")) {
-    articleModel.storageArticles();
-} else
+if (localStorage.getItem("user")) {
     articleModel.refreshArticles();
+    //document.getElementById("login-button").classList.add('invisible');
+    // var username = document.getElementById("username");
+    // username.firstElementChild.textContent = "HI, " + articleModel.user + ' |';
+    // username.classList.remove('invisible');
+}
+articleModel.replaceArticles();
+articleRendering.btnCheck();
 articleRendering.show();
 // articleRendering.signIn();
 //articleRendering.showMore();
