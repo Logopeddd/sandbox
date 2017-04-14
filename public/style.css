@@ -186,7 +186,8 @@ ul.sub_menu {
     background: url(./img/search_box.png) no-repeat -250px 3px;
 }
 
-#news {
+#content{
+    flex: 1 0 auto;
     position: relative;
     /*background: rgba(255, 255, 255, 0.9);*/
     width: 100%;
@@ -194,8 +195,8 @@ ul.sub_menu {
     margin: 0 auto 0 auto;
     text-align: center;
 }
-#content{
-    flex: 1 0 auto;
+
+#news {
     position: relative;
     /*background: rgba(255, 255, 255, 0.9);*/
     width: 100%;
@@ -248,8 +249,8 @@ ul.sub_menu {
 }
 
 .main > p {
-    display: inline-block;
-    width: 32%;
+    /*display: inline-block;*/
+    /*width: 32%;*/
     font-size: 24px;
 }
 
@@ -387,7 +388,6 @@ ul.sub_menu {
     height: 85%;
 }
 
-
 .edit form input[type="text"] {
     font: 16px Arial;
     border: 1px solid #a8c6fa;
@@ -406,7 +406,7 @@ ul.sub_menu {
     padding: 10px;
     margin: 10px 2% ;
     width: 94%;
-    height: 300px;
+    height: 240px;
 }
 
 .edit form input[type="submit"] {
@@ -433,25 +433,39 @@ ul.sub_menu {
     min-width: calc(940px - 2%);
     margin-left:auto;
     margin-right: auto;
-    height: 600px;
+    min-height: 600px;
     max-width: 1500px;
 }
+
 #article-tab input[type="button"] {
     font-family: "Comic Sans MS", Aclonica, cursive;
-    position: absolute;
-    bottom:1%;
-    left:1%;
+    /*position: absolute;*/
+    /*bottom:1%;*/
+    /*left:1%;*/
     background-color: #ebebeb;
     border: none;
     border-radius: 3px;
     color: #216bd4;
     cursor: pointer;
     font-weight: bold;
-    margin: 0;
+    margin: 0.5%;
     padding: 0.5% 1%;
 }
+
 #article-tab input[type="button"]:hover {
     background-color: #e0e0e0;
+}
+
+.admin-button{
+    visibility: hidden;
+}
+
+.resize{
+    transition: all 0.1s;
+}
+
+.resize:hover{
+    transform: scale(1.02);
 }
 
 #left {
@@ -463,9 +477,6 @@ ul.sub_menu {
     float: right;
     text-align: right;
 }
-.admin-button{
-    visibility: hidden;
-}
 
 .visible {
     display: block;
@@ -473,10 +484,4 @@ ul.sub_menu {
 
 .invisible {
     display: none;
-}
-.resize{
-    transition: all 0.1s;
-}
-.resize:hover{
-    transform: scale(1.02);
 }

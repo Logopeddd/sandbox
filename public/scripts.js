@@ -36,7 +36,7 @@ var articleModel = (function () {
          typeof article.author == "string" && article.author.length > 0 &&
          typeof article.content == "string" && article.content.length > 0 &&
          typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100*/) {
-            article.id = article.createdAt.toString()+article.author;
+            article.id = article.createdAt.toString() + article.author;
             console.log('validateArticle:  article' + article.id + ' ' + article.title + article.author + ' - ok');
             return true;
         }
@@ -49,7 +49,6 @@ var articleModel = (function () {
             dbModel.addArticle(article);
             replaceArticles();
             console.log('addArticle: article' + article.id + ' ' + article.title + article.author + ' - was added');
-
             return true;
         }
         console.log('addArticle: article' + article.id + ' ' + article.title + article.author + " - wasn't added");
@@ -63,6 +62,10 @@ var articleModel = (function () {
                         articles[articles.indexOf(item)].title = article.title;
                         console.log('editArticle: article' + id + ' - title was edited');
                     } else console.log('editArticle: article' + id + " - title wasn't edited");
+                    if (typeof article.summary == "string" && article.summary.length > 0) {
+                        articles[articles.indexOf(item)].summary = article.summary;
+                        console.log('editArticle: article' + id + ' - summary was edited');
+                    } else console.log('editArticle: article' + id + " - summary wasn't edited");
                     if (typeof article.content == "string" && article.content.length > 0) {
                         articles[articles.indexOf(item)].content = article.content;
                         console.log('editArticle: article' + id + ' - content was edited');
@@ -87,6 +90,7 @@ var articleModel = (function () {
                 if (item.id == id) {
                     articles.splice(articles.indexOf(item), 1);
                     console.log('removeArticle: article' + id + ' - was removed');
+                    dbModel.deleteArticle(id);
                     return true;
                 }
                 return false;
@@ -142,10 +146,24 @@ var articleModel = (function () {
     };
 }());
 var articleRendering = (function () {
+    var options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        timezone: 'UTC',
+        // hour: 'numeric',
+        // minute: 'numeric',
+        // second: 'numeric'
+    };
+
     function showArticle(item) {
         var news = document.getElementById('news');
         var tab = document.createElement('div');
-        tab.innerHTML = "<div class='tab resize' data-id='"+item.id+"'><h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2><img src=" + item.img + "><p>" + item.content + "</p> <span class='author'>" + item.author + ", " + item.createdAt.toDateString() + "</span></div>";
+        tab.innerHTML = "<div class='tab resize' data-id='" + item.id + "'>" +
+            "<h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2>" +
+            "<img src=" + item.img + ">" +
+            "<p>" + item.summary + "</p>" +
+            "<span class='author'>" + item.author + ", " + item.createdAt.toLocaleString("ru", options) + "</span></div>";
         news.appendChild(tab.firstChild);
     }
 
@@ -161,7 +179,7 @@ var articleRendering = (function () {
         news.firstElementChild.classList.add("main");
         if (i < articleModel.getArticlesLength()) {
             var tab = document.createElement('div');
-            tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Show more...</a> </div>';
+            tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
             news.appendChild(tab.firstChild);
         }
     }
@@ -179,40 +197,18 @@ var articleRendering = (function () {
     }
 
     function logIn() {
-
         var glass = document.getElementById("glass");
         glass.classList.remove('invisible');
     }
 
     function signIn() {
         document.getElementById("login-button").classList.add('invisible');
-
         articleModel.setLocalUser(document.getElementById('login-form').login.value);
         var username = document.getElementById("username");
         username.firstElementChild.textContent = "HI, " + localStorage.getItem("user") + ' |';
         username.classList.remove('invisible');
         btnCheck();
         document.getElementById('glass').classList.add('invisible');
-    }
-
-    function showAddPage() {
-        document.getElementById('edit-article').classList.add('invisible');
-        document.getElementById('article-tab').classList.add('invisible');
-        document.getElementById('news').classList.add('invisible');
-        document.getElementById('add-form').heading.value = "";
-        document.getElementById('add-form').image.value = "";
-        document.getElementById('add-form').paragraph.value = "";
-        document.getElementById('add-article').classList.remove('invisible');
-    }
-
-    function showEditPage(id) {
-        var item = articleModel.getArticle(id);
-        document.getElementById('article-tab').classList.add('invisible');
-        document.getElementById('edit-form').heading.value = item.title;
-        document.getElementById('edit-form').image.value = item.img;
-        document.getElementById('edit-form').paragraph.value = item.content;
-        document.getElementById('edit-form').setAttribute('action', "javascript:articleRendering.edit('" + id + "')");
-        document.getElementById('edit-article').classList.remove('invisible');
     }
 
     function main() {
@@ -226,16 +222,45 @@ var articleRendering = (function () {
     function detailView(elem) {
         document.getElementById('add-article').classList.add('invisible');
         var item = articleModel.getArticle(elem.dataset.id);
-        var tab = document.getElementById('article-tab');
-        tab.innerHTML = '<h1>' + item.title + '</h1><img src=' + item.img + '><p>' + item.content + '</p> <span class="author">' + item.author + ', ' + item.createdAt.toDateString() + '</span> <input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item.id + '\')" value="Редактировать">';
+        var tab = document.getElementById('article-tab')
+        tab.innerHTML = '<h1>' + item.title + '</h1>' +
+            '<img src=' + item.img + '>' +
+            '<p>' + item.content + '</p>' +
+            '<span class="author">' + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> ' +
+            '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item.id + '\')" value="Редактировать">' +
+            '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item.id + '\')" value="Удалить">'
+        ;
         document.getElementById('news').classList.add('invisible');
         btnCheck();
         tab.classList.remove('invisible');
     }
 
+    function showAddPage() {
+        document.getElementById('edit-article').classList.add('invisible');
+        document.getElementById('article-tab').classList.add('invisible');
+        document.getElementById('news').classList.add('invisible');
+        document.getElementById('add-form').heading.value = "";
+        document.getElementById('add-form').summary.value = "";
+        document.getElementById('add-form').image.value = "";
+        document.getElementById('add-form').paragraph.value = "";
+        document.getElementById('add-article').classList.remove('invisible');
+    }
+
+    function showEditPage(id) {
+        var item = articleModel.getArticle(id);
+        document.getElementById('article-tab').classList.add('invisible');
+        document.getElementById('edit-form').heading.value = item.title;
+        document.getElementById('edit-form').summary.value = item.summary;
+        document.getElementById('edit-form').image.value = item.img;
+        document.getElementById('edit-form').paragraph.value = item.content;
+        document.getElementById('edit-form').setAttribute('action', "javascript:articleRendering.edit('" + id + "')");
+        document.getElementById('edit-article').classList.remove('invisible');
+    }
+
     function add() {
         articleModel.addArticle({
             title: document.getElementById('add-form').heading.value,
+            summary: document.getElementById('add-form').summary.value,
             content: document.getElementById('add-form').paragraph.value,
             createdAt: new Date(),
             author: localStorage.getItem("user"),
@@ -245,9 +270,15 @@ var articleRendering = (function () {
         main();
     }
 
+    function remove(id) {
+        articleModel.removeArticle(id);
+        main();
+    }
+
     function edit(id) {
         var article = articleModel.getArticle(id);
         article.title = document.getElementById('edit-form').heading.value;
+        article.summary = document.getElementById('edit-form').summary.value;
         article.content = document.getElementById('edit-form').paragraph.value;
         article.img = document.getElementById('edit-form').image.value;
         // article.tag =
@@ -267,7 +298,6 @@ var articleRendering = (function () {
         }
     }
 
-
     function hide(event, id) {
         var target = event.target;
         if (target.id === id)
@@ -275,6 +305,7 @@ var articleRendering = (function () {
     }
 
     return {
+        remove,
         btnCheck,
         show,
         showMore,

@@ -11,10 +11,10 @@
         <div class="center">
             <div id="username" class="invisible">
                 <a name="name"></a>
-                <a class="button" onclick='articleRendering.showAddPage()'>Add an article</a>
+                <a class="button" onclick='articleRendering.showAddPage()'>Добавить новость</a>
             </div>
             <div id="login-button">
-                <a class="button" onclick="articleRendering.logIn()">Log in</a>
+                <a class="button" onclick="articleRendering.logIn()">Войти</a>
             </div>
             <div id="logo" class="resize button" onclick="articleRendering.main()">
             </div>
@@ -69,6 +69,7 @@
         <h1>Добавление новости</h1>
         <form id="add-form" action="javascript:articleRendering.add();" method="get">
             <input name="heading" type="text" autocomplete="off" placeholder="Заголовок">
+            <input name="summary" type="text" autocomplete="off" placeholder="Краткое описание">
             <input name="image" type="text" autocomplete="off" placeholder="Ссылка на изображение">
             <textarea name="paragraph" autocomplete="off" placeholder="Описание новости"></textarea>
             <input type="submit" value="ОПУБЛИКОВАТЬ">
@@ -80,19 +81,19 @@
         <h1>Редактирование новости</h1>
         <form id="edit-form" method="get">
             <input name="heading" type="text" autocomplete="off" placeholder="Заголовок">
+            <input name="summary" type="text" autocomplete="off" placeholder="Краткое описание">
             <input name="image" type="text" autocomplete="off" placeholder="Ссылка на изображение">
             <textarea name="paragraph" autocomplete="off" placeholder="Описание новости"></textarea>
-            <input type="submit" value="ОПУБЛИКОВАТЬ">
+            <input type="submit" value="СОХРАНИТЬ">
         </form>
     </div>
 </div>
 <footer class="footer">
-    <a id="left"><br>HNews, 25.03.2017</a>
-    <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V.,5th group, II course</a>
+    <a id="left"><br>HNews, 15.04.2017</a>
+    <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V., the 5th group, II course</a>
 </footer>
 
 <script type="text/javascript" src="http.js"></script>
 <script type="text/javascript" src="scripts.js"></script>
-
 </body>
 </html>

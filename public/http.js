@@ -11,13 +11,6 @@ var dbModel = ( function () {
         return req.onreadystatechange();
     }
 
-    function editArticle(article) {
-        let req = new XMLHttpRequest();
-        req.open("PATCH", "/articles");
-        req.setRequestHeader('content-type', 'application/json')
-        req.send(JSON.stringify(article));
-    }
-
     function addArticle(article) {
         let req = new XMLHttpRequest();
         req.open("PUT", "/articles");
@@ -29,6 +22,13 @@ var dbModel = ( function () {
         let req = new XMLHttpRequest();
         req.open("DELETE", "/articles/" + id);
         req.send();
+    }
+
+    function editArticle(article) {
+        let req = new XMLHttpRequest();
+        req.open("PATCH", "/articles");
+        req.setRequestHeader('content-type', 'application/json')
+        req.send(JSON.stringify(article));
     }
 
     return {
