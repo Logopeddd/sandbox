@@ -1,5 +1,5 @@
 var articleModel = (function () {
-    var tags = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
+    var tagList = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
     var articles = [];
 
     function replaceArticles() {
@@ -74,6 +74,10 @@ var articleModel = (function () {
                         articles[articles.indexOf(item)].img = article.img;
                         console.log('editArticle: article' + id + ' - img was edited');
                     } else console.log('editArticle: article' + id + " - img wasn't edited");
+                    if (article.tags.length > 0) {
+                        articles[articles.indexOf(item)].tags = article.tags;
+                        console.log('editArticle: article' + id + ' - tags was edited');
+                    } else console.log('editArticle: article' + id + " - tags wasn't edited");
                     return true;
                 }
                 return false;
@@ -132,7 +136,7 @@ var articleModel = (function () {
 
     return {
         articles,
-        tags,
+        tagList,
         replaceArticles,
         setLocalUser,
         getArticlesLength,
@@ -163,6 +167,7 @@ var articleRendering = (function () {
             "<h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2>" +
             "<img src=" + item.img + ">" +
             "<p>" + item.summary + "</p>" +
+            "<span class='tags'>" + "#" + item.tags + "</span>" +
             "<span class='author'>" + item.author + ", " + item.createdAt.toLocaleString("ru", options) + "</span></div>";
         news.appendChild(tab.firstChild);
     }
@@ -211,6 +216,14 @@ var articleRendering = (function () {
         document.getElementById('glass').classList.add('invisible');
     }
 
+    function logOut() {
+        localStorage.clear();
+        document.getElementById("username").classList.add('invisible');
+        document.getElementById("login-button").classList.remove('invisible');
+        btnCheck();
+        main();
+    }
+
     function main() {
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('add-article').classList.add('invisible');
@@ -226,7 +239,7 @@ var articleRendering = (function () {
         tab.innerHTML = '<h1>' + item.title + '</h1>' +
             '<img src=' + item.img + '>' +
             '<p>' + item.content + '</p>' +
-            '<span class="author">' + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> ' +
+            '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> ' +
             '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item.id + '\')" value="Редактировать">' +
             '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item.id + '\')" value="Удалить">'
         ;
@@ -253,6 +266,7 @@ var articleRendering = (function () {
         document.getElementById('edit-form').summary.value = item.summary;
         document.getElementById('edit-form').image.value = item.img;
         document.getElementById('edit-form').paragraph.value = item.content;
+        document.getElementById('edit-form').tags.value = item.tags;
         document.getElementById('edit-form').setAttribute('action', "javascript:articleRendering.edit('" + id + "')");
         document.getElementById('edit-article').classList.remove('invisible');
     }
@@ -265,7 +279,7 @@ var articleRendering = (function () {
             createdAt: new Date(),
             author: localStorage.getItem("user"),
             img: document.getElementById('add-form').image.value,
-            tag: ['politics'],
+            tags: document.getElementById('add-form').tags.value,
         });
         main();
     }
@@ -281,7 +295,7 @@ var articleRendering = (function () {
         article.summary = document.getElementById('edit-form').summary.value;
         article.content = document.getElementById('edit-form').paragraph.value;
         article.img = document.getElementById('edit-form').image.value;
-        // article.tag =
+        article.tags = document.getElementById('edit-form').tags.value;
         articleModel.editArticle(id, article);
         main();
     }
@@ -290,7 +304,7 @@ var articleRendering = (function () {
         if (localStorage.getItem("user")) {
             document.getElementById("login-button").classList.add('invisible');
             var username = document.getElementById("username");
-            username.firstElementChild.textContent = "HI, " + localStorage.getItem("user") + ' |';
+            username.firstElementChild.textContent = "Привет, " + localStorage.getItem("user") + ' |';
             username.classList.remove('invisible');
             var buttons = document.getElementsByClassName('admin-button');
             for (var i = 0; i < buttons.length; i++)
@@ -311,6 +325,7 @@ var articleRendering = (function () {
         showMore,
         logIn,
         signIn,
+        logOut,
         showAddPage,
         showEditPage,
         detailView,

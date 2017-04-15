@@ -10,7 +10,7 @@
     <div class="block1">
         <div class="center">
             <div id="username" class="invisible">
-                <a name="name"></a>
+                <a name="name" title="Нажмите, чтобы выйти" onclick='articleRendering.logOut()'></a>
                 <a class="button" onclick='articleRendering.showAddPage()'>Добавить новость</a>
             </div>
             <div id="login-button">
@@ -72,6 +72,7 @@
             <input name="summary" type="text" autocomplete="off" placeholder="Краткое описание">
             <input name="image" type="text" autocomplete="off" placeholder="Ссылка на изображение">
             <textarea name="paragraph" autocomplete="off" placeholder="Описание новости"></textarea>
+            <input name="tags" type="text" autocomplete="off" placeholder="Теги">
             <input type="submit" value="ОПУБЛИКОВАТЬ">
         </form>
     </div>
@@ -84,6 +85,7 @@
             <input name="summary" type="text" autocomplete="off" placeholder="Краткое описание">
             <input name="image" type="text" autocomplete="off" placeholder="Ссылка на изображение">
             <textarea name="paragraph" autocomplete="off" placeholder="Описание новости"></textarea>
+            <input name="tags" type="text" autocomplete="off" placeholder="Теги">
             <input type="submit" value="СОХРАНИТЬ">
         </form>
     </div>

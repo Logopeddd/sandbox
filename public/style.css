@@ -1,5 +1,5 @@
 body {
-position: relative;
+    position: relative;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -52,6 +52,7 @@ p {
     bottom: 5px;
     color: #a8c6fa;
     font-size: 16px;
+    cursor: pointer;
 }
 
 #login-button {
@@ -186,7 +187,7 @@ ul.sub_menu {
     background: url(./img/search_box.png) no-repeat -250px 3px;
 }
 
-#content{
+#content {
     flex: 1 0 auto;
     position: relative;
     /*background: rgba(255, 255, 255, 0.9);*/
@@ -254,11 +255,23 @@ ul.sub_menu {
     font-size: 24px;
 }
 
-.author {
+.tab > span {
     position: absolute;
     right: 15px;
     color: #7a7a7a;
     bottom: 15px;
+}
+
+.author {
+    position: absolute;
+    right: 15px;
+    text-align: right;
+}
+
+.tags {
+    position: absolute;
+    left: 15px;
+    text-align: left;
 }
 
 .pagination {
@@ -275,21 +288,21 @@ ul.sub_menu {
     background-color: rgba(241, 244, 249, 0.8);
 }
 
-#glass{
+#glass {
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
     left: 0;
     bottom: 0;
     /*min-width: 940px;*/
-    z-index:2;
-    width:100%;
+    z-index: 2;
+    width: 100%;
     height: 100%;
-    background: rgba(54,54,54,0.7);
+    background: rgba(54, 54, 54, 0.7);
 }
 
 #login-div {
-    z-index:2;
+    z-index: 2;
     position: fixed;
     top: 25vh;
     left: calc(50% - 150px);
@@ -365,12 +378,12 @@ ul.sub_menu {
     background-color: #e0e0e0;
 }
 
-.edit{
+.edit {
     width: 80%;
     min-width: calc(940px - 2%);
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
-    height: 600px;
+    height: 700px;
     max-width: 1500px;
 }
 
@@ -383,7 +396,7 @@ ul.sub_menu {
 .edit form {
     position: relative;
     text-align: left;
-    margin:1%;
+    margin: 1%;
     padding: 0 1%;
     height: 85%;
 }
@@ -404,7 +417,7 @@ ul.sub_menu {
     border: 1px solid #a8c6fa;
     border-radius: 3px;
     padding: 10px;
-    margin: 10px 2% ;
+    margin: 10px 2%;
     width: 94%;
     height: 240px;
 }
@@ -412,8 +425,8 @@ ul.sub_menu {
 .edit form input[type="submit"] {
     font-family: "Comic Sans MS", Aclonica, cursive;
     position: absolute;
-    bottom:1%;
-    right:1%;
+    bottom: 1%;
+    right: 1%;
     background-color: #ebebeb;
     border: none;
     border-radius: 3px;
@@ -431,7 +444,7 @@ ul.sub_menu {
 #article-tab {
     width: 80%;
     min-width: calc(940px - 2%);
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
     min-height: 600px;
     max-width: 1500px;
@@ -456,15 +469,15 @@ ul.sub_menu {
     background-color: #e0e0e0;
 }
 
-.admin-button{
+.admin-button {
     visibility: hidden;
 }
 
-.resize{
+.resize {
     transition: all 0.1s;
 }
 
-.resize:hover{
+.resize:hover {
     transform: scale(1.02);
 }
 
