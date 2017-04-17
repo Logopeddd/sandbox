@@ -165,8 +165,7 @@ let articleRendering = (function () {
         localStorage.clear();
         document.getElementById("username").classList.add('invisible');
         document.getElementById("login-button").classList.remove('invisible');
-        btnCheck();
-        main();
+        startApp();
     }
 
     function main() {
@@ -248,7 +247,6 @@ let articleRendering = (function () {
         article.tags = document.getElementById('edit-form').tags.value;
         dbModel.editArticle(article).then(function (ready) {
             startApp();
-
         });
     }
 
@@ -291,7 +289,6 @@ let articleRendering = (function () {
 function startApp() {
     articleModel.replaceArticles().then(function (ready) {
         articleRendering.btnCheck();
-        articleRendering.show();
         articleRendering.main();
     });
 }
