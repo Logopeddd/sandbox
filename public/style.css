@@ -83,7 +83,7 @@ p {
     padding: 0;
     float: left;
     border: 0;
-    width: 625px;
+    /*width: 625px;*/
 }
 
 #top_menu > li {
@@ -120,7 +120,6 @@ ul.sub_menu {
     position: absolute;
     width: 150px;
     top: 40px;
-    left: 0;
     list-style: none;
     background-color: rgba(241, 244, 249, 0.9);
 }
@@ -141,7 +140,6 @@ ul.sub_menu {
 #top_menu > li:hover {
     background-image: none;
     background-color: #a8c6fa;
-    color: red;
 }
 
 #top_menu > li:hover > ul.sub_menu {

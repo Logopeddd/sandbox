@@ -1,12 +1,15 @@
-var articleModel = (function () {
-    var tagList = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
-    var articles = [];
+let articleModel = (function () {
+    let tagList = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
+    let articles = [];
 
     function replaceArticles() {
-        articles = JSON.parse(dbModel.getArray());
-        for (var i = 0; i < articles.length; i++)
-            articles[i].createdAt = new Date(articles[i].createdAt);
-        articles.sort((a, b) => b.createdAt - a.createdAt);
+        return new Promise(function (resolve) {
+            dbModel.getArray().then(function (response) {
+                articles = response;
+                articles.sort((a, b) => b.createdAt - a.createdAt);
+                resolve();
+            });
+        });
     }
 
     function setLocalUser(username) {
@@ -14,7 +17,7 @@ var articleModel = (function () {
     }
 
     function getArticle(id) {
-        var article = articles.filter((item) => {
+        let article = articles.filter((item) => {
             return item.id == id;
         })[0];
         console.log('getArticle: article' + id + ' - was returned');
@@ -44,72 +47,13 @@ var articleModel = (function () {
         return false;
     }
 
-    function addArticle(article) {
-        if (validateArticle(article)) {
-            dbModel.addArticle(article);
-            replaceArticles();
-            console.log('addArticle: article' + article.id + ' ' + article.title + article.author + ' - was added');
-            return true;
-        }
-        console.log('addArticle: article' + article.id + ' ' + article.title + article.author + " - wasn't added");
-        return false;
-    }
-
-    function editArticle(id, article) {
-        if (articles.some(function (item) {
-                if (item.id == id) {
-                    if (typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100) {
-                        articles[articles.indexOf(item)].title = article.title;
-                        console.log('editArticle: article' + id + ' - title was edited');
-                    } else console.log('editArticle: article' + id + " - title wasn't edited");
-                    if (typeof article.summary == "string" && article.summary.length > 0) {
-                        articles[articles.indexOf(item)].summary = article.summary;
-                        console.log('editArticle: article' + id + ' - summary was edited');
-                    } else console.log('editArticle: article' + id + " - summary wasn't edited");
-                    if (typeof article.content == "string" && article.content.length > 0) {
-                        articles[articles.indexOf(item)].content = article.content;
-                        console.log('editArticle: article' + id + ' - content was edited');
-                    } else console.log('editArticle: article' + id + " - content wasn't edited");
-                    if (typeof article.img == "string" && article.img.length > 0) {
-                        articles[articles.indexOf(item)].img = article.img;
-                        console.log('editArticle: article' + id + ' - img was edited');
-                    } else console.log('editArticle: article' + id + " - img wasn't edited");
-                    if (article.tags.length > 0) {
-                        articles[articles.indexOf(item)].tags = article.tags;
-                        console.log('editArticle: article' + id + ' - tags was edited');
-                    } else console.log('editArticle: article' + id + " - tags wasn't edited");
-                    return true;
-                }
-                return false;
-            })) {
-            dbModel.editArticle(article);
-            return true;
-        }
-        console.log('editArticle: article' + id + " - wasn't found");
-        return false;
-    }
-
-    function removeArticle(id) {
-        if (articles.some(function (item) {
-                if (item.id == id) {
-                    articles.splice(articles.indexOf(item), 1);
-                    console.log('removeArticle: article' + id + ' - was removed');
-                    dbModel.deleteArticle(id);
-                    return true;
-                }
-                return false;
-            })) return true;
-        console.log('removeArticle: article' + id + " - not found");
-        return false;
-    }
-
     function getArticles(skip, top, filterConfig) {
         skip = skip || 0;
         top = top || 10;
         if (skip > articles.length) {
             return null;
         }
-        var filtered = articles.slice(skip, top + skip);
+        let filtered = articles.slice(skip, top + skip);
         if (typeof filterConfig.author == "string" && filterConfig.author.length > 0) {
             filtered = filtered.filter(function (item) {
                 return (filterConfig.author == item.author);
@@ -143,14 +87,13 @@ var articleModel = (function () {
         getArticlesAt,
         getArticle,
         validateArticle,
-        addArticle,
-        editArticle,
-        removeArticle,
         getArticles
     };
 }());
-var articleRendering = (function () {
-    var options = {
+
+let articleRendering = (function () {
+
+    let options = {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
@@ -161,8 +104,8 @@ var articleRendering = (function () {
     };
 
     function showArticle(item) {
-        var news = document.getElementById('news');
-        var tab = document.createElement('div');
+        let news = document.getElementById('news');
+        let tab = document.createElement('div');
         tab.innerHTML = "<div class='tab resize' data-id='" + item.id + "'>" +
             "<h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2>" +
             "<img src=" + item.img + ">" +
@@ -173,43 +116,45 @@ var articleRendering = (function () {
     }
 
     function showFrom(first) {
-        var news = document.getElementById('news');
+        let news = document.getElementById('news');
         if (news.lastChild.classList && news.lastChild.classList.contains("pagination")) {
             news.removeChild(news.lastChild);
         }
-        var i;
+        let i;
         for (i = first; i < articleModel.getArticlesLength() && i < first + 12; i++) {
             showArticle(articleModel.getArticlesAt(i));
         }
-        news.firstElementChild.classList.add("main");
+        let main = news.firstElementChild;
+        main.classList.add("main");
+        main.firstChild.textContent = main.firstChild.textContent.toUpperCase();
         if (i < articleModel.getArticlesLength()) {
-            var tab = document.createElement('div');
+            let tab = document.createElement('div');
             tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
             news.appendChild(tab.firstChild);
         }
     }
 
     function show() {
-        var news = document.getElementById('news');
+        let news = document.getElementById('news');
         while (news.firstElementChild)
             news.removeChild(news.firstElementChild);
         showFrom(0);
     }
 
     function showMore() {
-        var news = document.getElementById('news');
+        let news = document.getElementById('news');
         showFrom(news.childNodes.length - 2);
     }
 
     function logIn() {
-        var glass = document.getElementById("glass");
+        let glass = document.getElementById("glass");
         glass.classList.remove('invisible');
     }
 
     function signIn() {
         document.getElementById("login-button").classList.add('invisible');
         articleModel.setLocalUser(document.getElementById('login-form').login.value);
-        var username = document.getElementById("username");
+        let username = document.getElementById("username");
         username.firstElementChild.textContent = "HI, " + localStorage.getItem("user") + ' |';
         username.classList.remove('invisible');
         btnCheck();
@@ -234,8 +179,8 @@ var articleRendering = (function () {
 
     function detailView(elem) {
         document.getElementById('add-article').classList.add('invisible');
-        var item = articleModel.getArticle(elem.dataset.id);
-        var tab = document.getElementById('article-tab')
+        let item = articleModel.getArticle(elem.dataset.id);
+        let tab = document.getElementById('article-tab')
         tab.innerHTML = '<h1>' + item.title + '</h1>' +
             '<img src=' + item.img + '>' +
             '<p>' + item.content + '</p>' +
@@ -260,7 +205,7 @@ var articleRendering = (function () {
     }
 
     function showEditPage(id) {
-        var item = articleModel.getArticle(id);
+        let item = articleModel.getArticle(id);
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('edit-form').heading.value = item.title;
         document.getElementById('edit-form').summary.value = item.summary;
@@ -272,7 +217,7 @@ var articleRendering = (function () {
     }
 
     function add() {
-        articleModel.addArticle({
+        let article = {
             title: document.getElementById('add-form').heading.value,
             summary: document.getElementById('add-form').summary.value,
             content: document.getElementById('add-form').paragraph.value,
@@ -280,40 +225,46 @@ var articleRendering = (function () {
             author: localStorage.getItem("user"),
             img: document.getElementById('add-form').image.value,
             tags: document.getElementById('add-form').tags.value,
-        });
-        main();
+        };
+        if (articleModel.validateArticle(article)) {
+            dbModel.addArticle(article).then(function (ready) {
+                startApp();
+            })
+        }
     }
 
     function remove(id) {
-        articleModel.removeArticle(id);
-        main();
+        dbModel.deleteArticle(id).then(function (ready) {
+            startApp();
+        });
     }
 
     function edit(id) {
-        var article = articleModel.getArticle(id);
+        let article = articleModel.getArticle(id);
         article.title = document.getElementById('edit-form').heading.value;
         article.summary = document.getElementById('edit-form').summary.value;
         article.content = document.getElementById('edit-form').paragraph.value;
         article.img = document.getElementById('edit-form').image.value;
         article.tags = document.getElementById('edit-form').tags.value;
-        articleModel.editArticle(id, article);
-        main();
+        dbModel.editArticle(article).then(function (ready) {
+            startApp();
+        });
     }
 
     function btnCheck() {
         if (localStorage.getItem("user")) {
             document.getElementById("login-button").classList.add('invisible');
-            var username = document.getElementById("username");
+            let username = document.getElementById("username");
             username.firstElementChild.textContent = "Привет, " + localStorage.getItem("user") + ' |';
             username.classList.remove('invisible');
-            var buttons = document.getElementsByClassName('admin-button');
-            for (var i = 0; i < buttons.length; i++)
+            let buttons = document.getElementsByClassName('admin-button');
+            for (let i = 0; i < buttons.length; i++)
                 buttons[i].style.visibility = 'visible'
         }
     }
 
     function hide(event, id) {
-        var target = event.target;
+        let target = event.target;
         if (target.id === id)
             document.getElementById(id).classList.add('invisible');
     }
@@ -335,20 +286,14 @@ var articleRendering = (function () {
         hide
     };
 }());
+
+function startApp() {
+    articleModel.replaceArticles().then(function (ready) {
+        articleRendering.btnCheck();
+        articleRendering.show();
+    });
+}
+startApp();
 /*-------------------------------tests-------------------------------*/
-// articleModel.addArticle({
-//  id: ++articleModel.counter,
-//  title: 'Trump ',
-//  content: 'Donald Trump proposes a $54bn (£43bn) military spending increase - a rise of about 9% on 2016.',
-//  createdAt: new Date(),
-//  author: 'Eugene',
-//  img: './img/tab2.jpg',
-//  tag: ['politics']
-//  });
-//articleModel.removeArticle(3);
-//articleModel.editArticle(2, {title: 'Hello world'});
 //articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
 /////////////////////////////////////////////////////////
-articleModel.replaceArticles();
-articleRendering.btnCheck();
-articleRendering.show();

@@ -2,8 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>HNews</title>
-    <link href="style.css" rel="stylesheet">
+    <title>News</title>
+    <link rel="shortcut icon" href="/img/icon.png" type="image/png">
+</head>
+<link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div class="header">
@@ -23,27 +25,29 @@
     <div class="block2">
         <div class="center">
             <ul id="top_menu">
-                <li><a><img id="filter" src="./img/filter.png" width="20" height="20"
-                            alt="filter"></a>
+                <li onclick="articleRendering.main()"><img id="home" src="./img/home__.png" width="20" height="20" alt="home"></li>
+                <li>политика</li>
+                <li>общество</li>
+                <li>спорт</li>
+                <li>финансы</li>
+                <li>в мире</li>
+                <li>наука</li>
+                <li>происшествия</li>
+                <li><img id="filter" src="./img/filter.png" width="20" height="20" alt="filter">
                     <ul class="sub_menu">
                         <li><a href=#>filter 1</a></li>
                         <li><a href=#>filter 2</a></li>
                         <li><a href=#>filter 3</a></li>
                     </ul>
                 </li>
-                <li><a>business</a></li>
-                <li><a>sport</a></li>
-                <li><a>culture</a></li>
-                <li><a>fashion</a></li>
-                <li><a>technology</a></li>
-                <li><a>more</a></li>
             </ul>
-            <div id="search_box">
-                <form method="post" name="form_search" id="form_search" action="">
-                    <input type="text" name="txt_search" id="txt_search" placeholder="search..."/>
-                    <input type="submit" name="btn_search" id="btn_search" value=""/>
-                </form>
-            </div>
+
+            <!--<div id="search_box">-->
+            <!--<form method="post" name="form_search" id="form_search" action="">-->
+            <!--<input type="text" name="txt_search" id="txt_search" placeholder="search..."/>-->
+            <!--<input type="submit" name="btn_search" id="btn_search" value=""/>-->
+            <!--</form>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
@@ -91,7 +95,7 @@
     </div>
 </div>
 <footer class="footer">
-    <a id="left"><br>HNews, 15.04.2017</a>
+    <a id="left"><br>HNews, 17.04.2017</a>
     <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V., the 5th group, II course</a>
 </footer>
 
