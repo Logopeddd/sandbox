@@ -248,6 +248,7 @@ let articleRendering = (function () {
         article.tags = document.getElementById('edit-form').tags.value;
         dbModel.editArticle(article).then(function (ready) {
             startApp();
+
         });
     }
 
@@ -291,6 +292,7 @@ function startApp() {
     articleModel.replaceArticles().then(function (ready) {
         articleRendering.btnCheck();
         articleRendering.show();
+        articleRendering.main();
     });
 }
 startApp();
