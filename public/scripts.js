@@ -62,9 +62,19 @@ let articleModel = (function () {
                 });
             }
 
-            if (filterConfig.createdAt instanceof Date) {
+            // if (filterConfig.createdFrom instanceof Date && filterConfig.createdBefore instanceof Date) {
+            //     filtered = filtered.filter(item => {
+            //         return (item.createdAt.getTime() > filterConfig.createdFrom.getTime() && item.createdAt.getTime() < filterConfig.createdBefore.getTime());
+            //     });
+            // }
+            if (filterConfig.createdFrom != "Invalid Date") {
                 filtered = filtered.filter(item => {
-                    return (item.createdAt().getTime() > filterConfig.createdFrom.getTime() && item.createdAt().getTime() < filterConfig.createdBefore.getTime());
+                    return (item.createdAt.getTime() > filterConfig.createdFrom.getTime());
+                });
+            }
+            if (filterConfig.createdBefore != "Invalid Date") {
+                filtered = filtered.filter(item => {
+                    return (item.createdAt.getTime() < filterConfig.createdBefore.getTime());
                 });
             }
         }
@@ -119,10 +129,6 @@ let articleRendering = (function () {
         if (news.lastChild && news.lastChild.classList.contains("pagination")) {
             news.removeChild(news.lastChild);
         }
-        // let i;
-        // for (i = first; i < articleModel.getArticlesLength() && i < first + 12; i++) {
-        //     showArticle(articleModel.getArticlesAt(i));
-        // }
         articleModel.getArticles(first, first + 12).forEach(item => {
             showArticle(item);
         });
@@ -163,6 +169,8 @@ let articleRendering = (function () {
         username.classList.remove('invisible');
         btnCheck();
         document.getElementById('glass').classList.add('invisible');
+        document.getElementById("login-div").classList.add('invisible');
+
     }
 
     function logOut() {
@@ -176,22 +184,33 @@ let articleRendering = (function () {
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('add-article').classList.add('invisible');
         document.getElementById('edit-article').classList.add('invisible');
-        document.getElementById('glass').classList.add('invisible');
         document.getElementById('news').classList.remove('invisible');
+        document.getElementById('glass').classList.add('invisible');
+        document.getElementById("filter-div").classList.add('invisible');
+        document.getElementById("login-div").classList.add('invisible');
+        document.getElementById("filter-form").author.value = "";
+        document.getElementById("filter-form").createdFrom.value = "";
+        document.getElementById("filter-form").createdBefore.value = "";
         show();
     }
 
     function showFilter() {
         document.getElementById("glass").classList.remove('invisible');
-        document.getElementById("login-div").classList.add('invisible');
+        // document.getElementById("login-div").classList.add('invisible');
         document.getElementById("filter-div").classList.remove('invisible');
     }
 
     function filter() {
         document.getElementById("news").innerHTML = "";
-        articleModel.getArticles(0, null, {author: document.getElementById("filter-form").author.value}).forEach(item => {
+        articleModel.getArticles(0, null, {
+            author: document.getElementById("filter-form").author.value,
+            createdFrom: new Date(document.getElementById("filter-form").createdFrom.value),
+            createdBefore: new Date(document.getElementById("filter-form").createdBefore.value)
+        }).forEach(item => {
             showArticle(item);
         });
+        document.getElementById("glass").classList.add('invisible');
+        document.getElementById("filter-div").classList.add('invisible');
     }
 
     function detailView(elem) {
@@ -201,9 +220,9 @@ let articleRendering = (function () {
         tab.innerHTML = '<h1>' + item.title + '</h1>' +
             '<img src=' + item.img + '>' +
             '<p>' + item.content + '</p>' +
-            '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> ' +
             '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item.id + '\')" value="Редактировать">' +
-            '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item.id + '\')" value="Удалить">'
+            '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item.id + '\')" value="Удалить">' +
+            '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> '
         ;
         document.getElementById('news').classList.add('invisible');
         btnCheck();

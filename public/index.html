@@ -71,6 +71,8 @@
             <fieldset>
                 <form id="filter-form" action="javascript:articleRendering.filter();" method="get">
                     <input name="author" type="text" placeholder="Автор">
+                    <input name="createdFrom"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="с">
+                    <input name="createdBefore"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="по">
                     <!--<input name="password" type="password" placeholder="Пароль"-->
                            <!--onFocus="if(this.value=='Пароль')this.value='' ">-->
                     <input type="submit" value="Показать">
