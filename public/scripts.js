@@ -33,12 +33,13 @@ let articleModel = (function () {
     }
 
     function validateArticle(article) {
-        if (true/*typeof article.id == "number" &&
-         typeof article.createdAt == "object" &&
-         typeof article.tag == "object" && article.tag.length >= 1 && article.tag.length <= 5 &&
-         typeof article.author == "string" && article.author.length > 0 &&
-         typeof article.content == "string" && article.content.length > 0 &&
-         typeof article.title == "string" && article.title.length > 0 && article.title.length <= 100*/) {
+        if (
+            article.createdAt instanceof Date &&
+            /* typeof article.tag == "object" && article.tag.length >= 1 && article.tag.length <= 5 &&*/
+            typeof article.author === "string" && article.author.length > 0 &&
+            typeof article.summary === "string" && article.summary.length > 0 &&
+            typeof article.content === "string" && article.content.length > 0 &&
+            typeof article.title === "string" && article.title.length > 0 && article.title.length < 100) {
             article.id = article.createdAt.toString() + article.author;
             console.log('validateArticle:  article' + article.id + ' ' + article.title + article.author + ' - ok');
             return true;
@@ -49,33 +50,32 @@ let articleModel = (function () {
 
     function getArticles(skip, top, filterConfig) {
         skip = skip || 0;
-        top = top || 10;
+        top = top || articles.length;
         if (skip > articles.length) {
             return null;
         }
         let filtered = articles.slice(skip, top + skip);
-        if (typeof filterConfig.author == "string" && filterConfig.author.length > 0) {
-            filtered = filtered.filter(function (item) {
-                return (filterConfig.author == item.author);
-            });
-        }
+        if (filterConfig) {
+            if (typeof filterConfig.author === "string" && filterConfig.author.length > 0) {
+                filtered = filtered.filter(item => {
+                    return (filterConfig.author == item.author);
+                });
+            }
 
-        if (filterConfig.createdAt instanceof Date) {
-            filtered = filtered.filter(function (item) {
-                return (filterConfig.createdAt.getFullYear() == item.createdAt.getFullYear() &&
-                filterConfig.createdAt.getMonth() == item.createdAt.getMonth() &&
-                filterConfig.createdAt.getDate() == item.createdAt.getDate());
-            });
+            if (filterConfig.createdAt instanceof Date) {
+                filtered = filtered.filter(item => {
+                    return (item.createdAt().getTime() > filterConfig.createdFrom.getTime() && item.createdAt().getTime() < filterConfig.createdBefore.getTime());
+                });
+            }
         }
-
         filtered.sort(function (a, b) {
             return b.createdAt - a.createdAt;
         });
         console.log('getArticles:');
-        filtered.forEach(function (item) {
+        filtered.forEach(item => {
             console.log(item.id + ' ' + item.title);
         });
-
+        return filtered;
     }
 
     return {
@@ -92,7 +92,6 @@ let articleModel = (function () {
 }());
 
 let articleRendering = (function () {
-
     let options = {
         year: 'numeric',
         month: 'numeric',
@@ -117,17 +116,20 @@ let articleRendering = (function () {
 
     function showFrom(first) {
         let news = document.getElementById('news');
-        if (news.lastChild.classList && news.lastChild.classList.contains("pagination")) {
+        if (news.lastChild && news.lastChild.classList.contains("pagination")) {
             news.removeChild(news.lastChild);
         }
-        let i;
-        for (i = first; i < articleModel.getArticlesLength() && i < first + 12; i++) {
-            showArticle(articleModel.getArticlesAt(i));
-        }
+        // let i;
+        // for (i = first; i < articleModel.getArticlesLength() && i < first + 12; i++) {
+        //     showArticle(articleModel.getArticlesAt(i));
+        // }
+        articleModel.getArticles(first, first + 12).forEach(item => {
+            showArticle(item);
+        });
         let main = news.firstElementChild;
         main.classList.add("main");
         main.firstChild.textContent = main.firstChild.textContent.toUpperCase();
-        if (i < articleModel.getArticlesLength()) {
+        if (first + 11 < articleModel.getArticlesLength()) {
             let tab = document.createElement('div');
             tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
             news.appendChild(tab.firstChild);
@@ -143,12 +145,14 @@ let articleRendering = (function () {
 
     function showMore() {
         let news = document.getElementById('news');
-        showFrom(news.childNodes.length - 2);
+        showFrom(news.childNodes.length - 1);
     }
 
     function logIn() {
-        let glass = document.getElementById("glass");
-        glass.classList.remove('invisible');
+        document.getElementById("glass").classList.remove('invisible');
+        document.getElementById("filter-div").classList.add('invisible')
+        document.getElementById("login-div").classList.remove('invisible');
+
     }
 
     function signIn() {
@@ -172,8 +176,22 @@ let articleRendering = (function () {
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('add-article').classList.add('invisible');
         document.getElementById('edit-article').classList.add('invisible');
+        document.getElementById('glass').classList.add('invisible');
         document.getElementById('news').classList.remove('invisible');
         show();
+    }
+
+    function showFilter() {
+        document.getElementById("glass").classList.remove('invisible');
+        document.getElementById("login-div").classList.add('invisible');
+        document.getElementById("filter-div").classList.remove('invisible');
+    }
+
+    function filter() {
+        document.getElementById("news").innerHTML = "";
+        articleModel.getArticles(0, null, {author: document.getElementById("filter-form").author.value}).forEach(item => {
+            showArticle(item);
+        });
     }
 
     function detailView(elem) {
@@ -264,8 +282,9 @@ let articleRendering = (function () {
 
     function hide(event, id) {
         let target = event.target;
-        if (target.id === id)
-            document.getElementById(id).classList.add('invisible');
+        if (target.id === id) {
+            document.getElementById(id).classList.add("invisible");
+        }
     }
 
     return {
@@ -276,6 +295,8 @@ let articleRendering = (function () {
         logIn,
         signIn,
         logOut,
+        showFilter,
+        filter,
         showAddPage,
         showEditPage,
         detailView,

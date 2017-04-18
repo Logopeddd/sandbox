@@ -33,13 +33,13 @@
                 <li>в мире</li>
                 <li>наука</li>
                 <li>происшествия</li>
-                <li><img id="filter" src="./img/filter.png" width="20" height="20" alt="filter">
-                    <ul class="sub_menu">
-                        <li><a href=#>filter 1</a></li>
-                        <li><a href=#>filter 2</a></li>
-                        <li><a href=#>filter 3</a></li>
-                    </ul>
-                </li>
+                <li onclick="articleRendering.showFilter()"><img id="filter" src="./img/filter.png" width="20" height="20" alt="filter" ></li>
+                    <!--<ul class="sub_menu">-->
+                        <!--<li><a href=#>filter 1</a></li>-->
+                        <!--<li><a href=#>filter 2</a></li>-->
+                        <!--<li><a href=#>filter 3</a></li>-->
+                    <!--</ul>-->
+
             </ul>
 
             <!--<div id="search_box">-->
@@ -52,11 +52,10 @@
     </div>
 </div>
 <div id="content">
-    <div id="news">
-    </div>
+    <div id="news"></div>
 
     <div id="glass" class="invisible" onclick="articleRendering.hide(event, 'glass')">
-        <div id="login-div">
+        <div id="login-div" class="invisible">
             <h1>АВТОРИЗАЦИЯ</h1>
             <fieldset>
                 <form id="login-form" action="javascript:articleRendering.signIn();" method="get">
@@ -64,6 +63,17 @@
                     <input name="password" type="password" placeholder="Пароль"
                            onFocus="if(this.value=='Пароль')this.value='' ">
                     <input type="submit" value="ВОЙТИ">
+                </form>
+            </fieldset>
+        </div>
+        <div id="filter-div" class="invisible">
+            <h1>ФИЛЬТР</h1>
+            <fieldset>
+                <form id="filter-form" action="javascript:articleRendering.filter();" method="get">
+                    <input name="author" type="text" placeholder="Автор">
+                    <!--<input name="password" type="password" placeholder="Пароль"-->
+                           <!--onFocus="if(this.value=='Пароль')this.value='' ">-->
+                    <input type="submit" value="Показать">
                 </form>
             </fieldset>
         </div>
@@ -95,7 +105,7 @@
     </div>
 </div>
 <footer class="footer">
-    <a id="left"><br>HNews, 17.04.2017</a>
+    <a id="left"><br>HNews, 18.04.2017</a>
     <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V., the 5th group, II course</a>
 </footer>
 

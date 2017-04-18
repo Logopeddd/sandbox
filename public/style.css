@@ -299,7 +299,7 @@ ul.sub_menu {
     background: rgba(54, 54, 54, 0.7);
 }
 
-#login-div {
+#glass div {
     z-index: 2;
     position: fixed;
     top: 25vh;
@@ -314,7 +314,7 @@ ul.sub_menu {
 
 }
 
-#login-div h1 {
+#glass div h1 {
     background-color: #216bd4;
     border-radius: 5px 5px 0 0;
     color: #fff;
@@ -325,18 +325,18 @@ ul.sub_menu {
     font-size: 14px;
 }
 
-#login-div fieldset {
+#glass div fieldset {
     border: none;
     padding: 20px;
     position: relative;
 }
 
-#login-div fieldset form {
+#glass div fieldset form {
     overflow: hidden;
     width: 270px;
 }
 
-#login-div fieldset form input {
+#glass div fieldset form input {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     outline: none;
@@ -345,14 +345,14 @@ ul.sub_menu {
 
 }
 
-#login-div fieldset form input[type="text"] {
+#glass div fieldset form input[type="text"] {
     border: 1px solid #a8c6fa;
     border-radius: 3px 3px 0 0;
     padding: 12px 10px;
     width: 238px;
 }
 
-#login-div fieldset form input[type="password"] {
+#glass div fieldset form input[type="password"] {
     border: 1px solid #a8c6fa;
     border-top: none;
     border-radius: 0 0 3px 3px;
@@ -360,7 +360,7 @@ ul.sub_menu {
     width: 238px;
 }
 
-#login-div fieldset form input[type="submit"] {
+#glass div fieldset form input[type="submit"] {
     background-color: #ebebeb;
     border: none;
     border-radius: 3px;
@@ -372,7 +372,7 @@ ul.sub_menu {
     padding: 12px 12px;
 }
 
-#login-div fieldset form input[type="submit"]:hover {
+#glass div fieldset form input[type="submit"]:hover {
     background-color: #e0e0e0;
 }
 
