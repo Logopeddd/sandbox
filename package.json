@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "connect-diskdb": "0.0.1",
     "diskdb": "^0.1.17",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   }
 }
