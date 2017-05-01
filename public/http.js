@@ -65,10 +65,59 @@ let dbModel = ( function () {
         });
     }
 
+    function logIn(user){
+        return new Promise(function (resolve, reject) {
+            let req = new XMLHttpRequest();
+            req.open("POST", "/login");
+            req.setRequestHeader('content-type', 'application/json');
+            req.onload = function () {
+                if (req.status === 200)
+                    resolve();
+                else
+                    reject();
+            };
+            req.onerror = function () {
+                reject(new Error("Error"));
+            };
+            req.send(JSON.stringify(user));
+        });
+    }
+
+    function logOut(){
+        return new Promise(function (resolve) {
+            let req = new XMLHttpRequest();
+            req.open("GET", "/logout");
+            req.onload = function () {
+                if (req.status === 200)
+                    resolve();
+            };
+            req.send();
+        });
+    }
+
+    function getName(){
+        return new Promise(function (resolve, reject) {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/username');
+            req.onload = function () {
+                if (req.status === 200)
+                    resolve(req.responseText);
+                else
+                    reject();
+            };
+            req.onerror = function () {
+                reject(new Error("Error"));
+            };
+            req.send();
+        });
+    }
     return {
         getArray,
         editArticle,
         addArticle,
         deleteArticle,
+        logIn,
+        logOut,
+        getName
     };
 }());

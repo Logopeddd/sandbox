@@ -61,12 +61,6 @@ let articleModel = (function () {
                     return (filterConfig.author == item.author);
                 });
             }
-
-            // if (filterConfig.createdFrom instanceof Date && filterConfig.createdBefore instanceof Date) {
-            //     filtered = filtered.filter(item => {
-            //         return (item.createdAt.getTime() > filterConfig.createdFrom.getTime() && item.createdAt.getTime() < filterConfig.createdBefore.getTime());
-            //     });
-            // }
             if (filterConfig.createdFrom != "Invalid Date") {
                 filtered = filtered.filter(item => {
                     return (item.createdAt.getTime() > filterConfig.createdFrom.getTime());
@@ -156,28 +150,32 @@ let articleRendering = (function () {
 
     function logIn() {
         document.getElementById("glass").classList.remove('invisible');
-        document.getElementById("filter-div").classList.add('invisible')
+        document.getElementById("filter-div").classList.add('invisible');
         document.getElementById("login-div").classList.remove('invisible');
 
     }
 
     function signIn() {
-        document.getElementById("login-button").classList.add('invisible');
-        articleModel.setLocalUser(document.getElementById('login-form').login.value);
-        let username = document.getElementById("username");
-        username.firstElementChild.textContent = "HI, " + localStorage.getItem("user") + ' |';
-        username.classList.remove('invisible');
-        btnCheck();
-        document.getElementById('glass').classList.add('invisible');
-        document.getElementById("login-div").classList.add('invisible');
-
+        let username = document.getElementById('login-form').login.value;
+        let password = document.getElementById('login-form').password.value;
+        dbModel.logIn({username, password}).then(
+            function () {
+                let username = document.getElementById("username");
+                btnCheck();
+                document.getElementById('glass').classList.add('invisible');
+                document.getElementById("login-div").classList.add('invisible');
+            }
+        );
     }
 
     function logOut() {
-        localStorage.clear();
-        document.getElementById("username").classList.add('invisible');
-        document.getElementById("login-button").classList.remove('invisible');
-        startApp();
+        dbModel.logOut().then(
+            function () {
+                document.getElementById("username").classList.add('invisible');
+                document.getElementById("login-button").classList.remove('invisible');
+                startApp();
+            }
+        );
     }
 
     function main() {
@@ -253,20 +251,26 @@ let articleRendering = (function () {
     }
 
     function add() {
-        let article = {
-            title: document.getElementById('add-form').heading.value,
-            summary: document.getElementById('add-form').summary.value,
-            content: document.getElementById('add-form').paragraph.value,
-            createdAt: new Date(),
-            author: localStorage.getItem("user"),
-            img: document.getElementById('add-form').image.value,
-            tags: document.getElementById('add-form').tags.value,
-        };
-        if (articleModel.validateArticle(article)) {
-            dbModel.addArticle(article).then(function (ready) {
-                startApp();
-            })
-        }
+        dbModel.getName().then(
+            function (username) {
+                let article = {
+                    title: document.getElementById('add-form').heading.value,
+                    summary: document.getElementById('add-form').summary.value,
+                    content: document.getElementById('add-form').paragraph.value,
+                    createdAt: new Date(),
+                    author: username,
+                    img: document.getElementById('add-form').image.value,
+                    tags: document.getElementById('add-form').tags.value,
+                };
+                if (articleModel.validateArticle(article)) {
+                    dbModel.addArticle(article).then(function (ready) {
+                        startApp();
+                    })
+                }
+            }
+        );
+
+
     }
 
     function remove(id) {
@@ -288,6 +292,19 @@ let articleRendering = (function () {
     }
 
     function btnCheck() {
+        dbModel.getName().then(
+            function (username) {
+                document.getElementById("login-button").classList.add('invisible');
+                let userDiv = document.getElementById("username");
+                userDiv.firstElementChild.textContent = "HI, " + username + ' |';
+                userDiv.classList.remove('invisible');
+                let buttons = document.getElementsByClassName('admin-button');
+                for (let i = 0; i < buttons.length; i++)
+                    buttons[i].style.visibility = 'visible'
+            }
+        );
+
+
         if (localStorage.getItem("user")) {
             document.getElementById("login-button").classList.add('invisible');
             let username = document.getElementById("username");
