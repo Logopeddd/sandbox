@@ -296,7 +296,7 @@ let articleRendering = (function () {
             function (username) {
                 document.getElementById("login-button").classList.add('invisible');
                 let userDiv = document.getElementById("username");
-                userDiv.firstElementChild.textContent = "HI, " + username + ' |';
+                userDiv.firstElementChild.textContent = "Добрейший вечерочек, " + username + ' |';
                 userDiv.classList.remove('invisible');
                 let buttons = document.getElementsByClassName('admin-button');
                 for (let i = 0; i < buttons.length; i++)
