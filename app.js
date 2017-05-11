@@ -44,16 +44,17 @@ passport.use('login', new LocalStrategy({
         passReqToCallback: true
     },
     (req, username, password, done) => {
-        const user = db.users.findOne({ username: username });
-        if (!user) {
-            console.log('User Not Found with username ' + username);
-            return done(null, false, { message: 'user not found' });
-        }
-        if (password !== user.password) {
-            console.log('Invalid Password');
-            return done(null, false, { message: 'incorrect password' });
-        }
-        return done(null, user);
+    users.findOne({ username: username }, (err, user) => {
+            if (!user) {
+                console.log('User Not Found with username ' + username);
+                return done(null, false, { message: 'user not found' });
+            }
+            if (password !== user.password) {
+                console.log('Invalid Password');
+                return done(null, false, { message: 'incorrect password' });
+            }
+            return done(null, user);
+        });
     })
 );
 
