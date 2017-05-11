@@ -2,12 +2,21 @@ let express = require('express');
 let app = express();
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
+let users = require('./db.js').users;
+let articles = require('./db.js').articles;
 let session = require('express-session');
-let sessionStore = require('connect-diskdb')(session);
-let store = new sessionStore({ path: './DataBase', name: 'sessions' });
-let db = require('diskdb');
+let sessionStore = require('connect-mongo')(session);
+let store = new sessionStore({url: 'mongodb://localhost/1'});
+// let db = require('diskdb');
+// db.connect('./DataBase', ['articles']);
+//
+// const arts = db.articles.find();
+// arts.forEach(item => {
+//     delete item.id;
+//     delete item._id;
+//     new articles(item).save(err => !err ? console.log('added') : console.log('err'));
+// })
 
-db.connect('./DataBase', ['articles','users']);
 let bodyParser = require('body-parser');
 
 app.set('port', (process.env.PORT || 3000));
@@ -58,24 +67,23 @@ app.get('/logout', (req, res) => {
 app.get('/username', (req, res) => req.user ? res.send(req.user.username) : res.sendStatus(401));
 
 app.get('/articles', function (req, res) {
-    res.json(db.articles.find())
+    articles.find((err, data) => !err ? res.json(data) : res.sendStatus(500));
 });
 
 app.get('/articles/:id', function (req, res) {
-    res.json(db.articles.findOne({id: req.params.id}));
-});
-
-app.put('/articles', function (req, res) {
-    res.json(db.articles.save(req.body));
-});
-
-app.delete('/articles/:id', function (req, res) {
-    res.json(db.articles.remove({id: req.params.id}));
+    articles.findById(req.body.id, (err, data) => !err ? res.json(data) : res.sendStatus(500));
 });
 
 app.patch('/articles', function (req, res) {
-    db.articles.remove({id: req.body.id});
-    res.json(db.articles.save(req.body));
+    articles.findByIdAndUpdate(req.body.id, {$set: req.body}, err => !err ? res.sendStatus(200) : res.sendStatus(500));
+});
+
+app.delete('/articles/:id', function (req, res) {
+    articles.findByIdAndRemove(req.params.id, err => !err ? res.sendStatus(200) : res.sendStatus(500));
+});
+
+app.post('/articles', (req, res) => {
+    new articles(req.body).save(err => !err ? res.sendStatus(200) : res.sendStatus(500));
 });
 
 app.listen(app.get('port'), function () {

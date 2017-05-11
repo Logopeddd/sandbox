@@ -18,7 +18,7 @@ let articleModel = (function () {
 
     function getArticle(id) {
         let article = articles.filter((item) => {
-            return item.id == id;
+            return item._id == id;
         })[0];
         console.log('getArticle: article' + id + ' - was returned');
         return article;
@@ -40,7 +40,7 @@ let articleModel = (function () {
             typeof article.summary === "string" && article.summary.length > 0 &&
             typeof article.content === "string" && article.content.length > 0 &&
             typeof article.title === "string" && article.title.length > 0 && article.title.length < 100) {
-            article.id = article.createdAt.toString() + article.author;
+            // article.id = article.createdAt.toString() + article.author;
             console.log('validateArticle:  article' + article.id + ' ' + article.title + article.author + ' - ok');
             return true;
         }
@@ -77,7 +77,7 @@ let articleModel = (function () {
         });
         console.log('getArticles:');
         filtered.forEach(item => {
-            console.log(item.id + ' ' + item.title);
+            console.log(item._id + ' ' + item.title);
         });
         return filtered;
     }
@@ -109,7 +109,7 @@ let articleRendering = (function () {
     function showArticle(item) {
         let news = document.getElementById('news');
         let tab = document.createElement('div');
-        tab.innerHTML = "<div class='tab resize' data-id='" + item.id + "'>" +
+        tab.innerHTML = "<div class='tab resize' data-id='" + item._id + "'>" +
             "<h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2>" +
             "<img src=" + item.img + ">" +
             "<p>" + item.summary + "</p>" +
@@ -218,8 +218,8 @@ let articleRendering = (function () {
         tab.innerHTML = '<h1>' + item.title + '</h1>' +
             '<img src=' + item.img + '>' +
             '<p>' + item.content + '</p>' +
-            '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item.id + '\')" value="Редактировать">' +
-            '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item.id + '\')" value="Удалить">' +
+            '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item._id + '\')" value="Редактировать">' +
+            '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item._id + '\')" value="Удалить">' +
             '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> '
         ;
         document.getElementById('news').classList.add('invisible');
