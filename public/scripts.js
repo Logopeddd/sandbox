@@ -1,10 +1,10 @@
-let articleModel = (function () {
+const articleModel = (function () {
     let tagList = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
     let articles = [];
 
     function replaceArticles() {
-        return new Promise(function (resolve) {
-            dbModel.getArray().then(function (response) {
+        return new Promise((resolve) => {
+            dbModel.getArray().then((response) => {
                 articles = response;
                 articles.sort((a, b) => b.createdAt - a.createdAt);
                 resolve();
@@ -12,13 +12,9 @@ let articleModel = (function () {
         });
     }
 
-    function setLocalUser(username) {
-        localStorage.setItem("user", username);
-    }
-
     function getArticle(id) {
-        let article = articles.filter((item) => {
-            return item._id == id;
+        const article = articles.filter((item) => {
+            return item._id === id;
         })[0];
         console.log('getArticle: article' + id + ' - was returned');
         return article;
@@ -36,15 +32,15 @@ let articleModel = (function () {
         if (
             article.createdAt instanceof Date &&
             /* typeof article.tag == "object" && article.tag.length >= 1 && article.tag.length <= 5 &&*/
-            typeof article.author === "string" && article.author.length > 0 &&
-            typeof article.summary === "string" && article.summary.length > 0 &&
-            typeof article.content === "string" && article.content.length > 0 &&
-            typeof article.title === "string" && article.title.length > 0 && article.title.length < 100) {
+            typeof article.author === 'string' && article.author.length > 0 &&
+            typeof article.summary === 'string' && article.summary.length > 0 &&
+            typeof article.content === 'string' && article.content.length > 0 &&
+            typeof article.title === 'string' && article.title.length > 0 && article.title.length < 100) {
             // article.id = article.createdAt.toString() + article.author;
-            console.log('validateArticle:  article' + article.id + ' ' + article.title + article.author + ' - ok');
+            console.log('validateArticle: article' + article.id + ' ' + article.title + article.author + ' - ok');
             return true;
         }
-        console.log('validateArticle:  article' + article.id + ' ' + article.title + article.author + " - isn't ok");
+        console.log('validateArticle: article' + article.id + ' ' + article.title + article.author + " - isn't ok");
         return false;
     }
 
@@ -56,27 +52,27 @@ let articleModel = (function () {
         }
         let filtered = articles.slice(skip, top + skip);
         if (filterConfig) {
-            if (typeof filterConfig.author === "string" && filterConfig.author.length > 0) {
-                filtered = filtered.filter(item => {
-                    return (filterConfig.author == item.author);
+            if (typeof filterConfig.author === 'string' && filterConfig.author.length > 0) {
+                filtered = filtered.filter((item) => {
+                    return (filterConfig.author === item.author);
                 });
             }
-            if (filterConfig.createdFrom != "Invalid Date") {
-                filtered = filtered.filter(item => {
+            if (filterConfig.createdFrom !== 'Invalid Date') {
+                filtered = filtered.filter((item) => {
                     return (item.createdAt.getTime() > filterConfig.createdFrom.getTime());
                 });
             }
-            if (filterConfig.createdBefore != "Invalid Date") {
-                filtered = filtered.filter(item => {
+            if (filterConfig.createdBefore !== "Invalid Date") {
+                filtered = filtered.filter((item) => {
                     return (item.createdAt.getTime() < filterConfig.createdBefore.getTime());
                 });
             }
         }
-        filtered.sort(function (a, b) {
+        filtered.sort((a, b) => {
             return b.createdAt - a.createdAt;
         });
         console.log('getArticles:');
-        filtered.forEach(item => {
+        filtered.forEach((item) => {
             console.log(item._id + ' ' + item.title);
         });
         return filtered;
@@ -86,7 +82,6 @@ let articleModel = (function () {
         articles,
         tagList,
         replaceArticles,
-        setLocalUser,
         getArticlesLength,
         getArticlesAt,
         getArticle,
@@ -96,7 +91,7 @@ let articleModel = (function () {
 }());
 
 let articleRendering = (function () {
-    let options = {
+    const options = {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
@@ -107,8 +102,8 @@ let articleRendering = (function () {
     };
 
     function showArticle(item) {
-        let news = document.getElementById('news');
-        let tab = document.createElement('div');
+        const news = document.getElementById('news');
+        const tab = document.createElement('div');
         tab.innerHTML = "<div class='tab resize' data-id='" + item._id + "'>" +
             "<h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2>" +
             "<img src=" + item.img + ">" +
@@ -119,63 +114,61 @@ let articleRendering = (function () {
     }
 
     function showFrom(first) {
-        let news = document.getElementById('news');
-        if (news.lastChild && news.lastChild.classList.contains("pagination")) {
+        const news = document.getElementById('news');
+        if (news.lastChild && news.lastChild.classList.contains('pagination')) {
             news.removeChild(news.lastChild);
         }
-        articleModel.getArticles(first, first + 12).forEach(item => {
+        articleModel.getArticles(first, first + 12).forEach((item) => {
             showArticle(item);
         });
-        let main = news.firstElementChild;
-        main.classList.add("main");
-        main.firstChild.textContent = main.firstChild.textContent.toUpperCase();
+        const Main = news.firstElementChild;
+        Main.classList.add('main');
+        Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
         if (first + 11 < articleModel.getArticlesLength()) {
-            let tab = document.createElement('div');
+            const tab = document.createElement('div');
             tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
             news.appendChild(tab.firstChild);
         }
     }
 
     function show() {
-        let news = document.getElementById('news');
-        while (news.firstElementChild)
+        const news = document.getElementById('news');
+        while (news.firstElementChild) {
             news.removeChild(news.firstElementChild);
+        }
         showFrom(0);
     }
 
     function showMore() {
-        let news = document.getElementById('news');
+        const news = document.getElementById('news');
         showFrom(news.childNodes.length - 1);
     }
 
     function logIn() {
-        document.getElementById("glass").classList.remove('invisible');
-        document.getElementById("filter-div").classList.add('invisible');
-        document.getElementById("login-div").classList.remove('invisible');
-
+        document.getElementById('glass').classList.remove('invisible');
+        document.getElementById('filter-div').classList.add('invisible');
+        document.getElementById('login-div').classList.remove('invisible');
     }
 
     function signIn() {
-        let username = document.getElementById('login-form').login.value;
-        let password = document.getElementById('login-form').password.value;
+        const username = document.getElementById('login-form').login.value;
+        const password = document.getElementById('login-form').password.value;
         dbModel.logIn({username, password}).then(
-            function () {
-                let username = document.getElementById("username");
+            () => {
+                const username = document.getElementById('username');
                 btnCheck();
                 document.getElementById('glass').classList.add('invisible');
-                document.getElementById("login-div").classList.add('invisible');
-            }
-        );
+                document.getElementById('login-div').classList.add('invisible');
+            });
     }
 
     function logOut() {
         dbModel.logOut().then(
-            function () {
-                document.getElementById("username").classList.add('invisible');
-                document.getElementById("login-button").classList.remove('invisible');
+            () => {
+                document.getElementById('username').classList.add('invisible');
+                document.getElementById('login-button').classList.remove('invisible');
                 startApp();
-            }
-        );
+            });
     }
 
     function main() {
@@ -184,37 +177,37 @@ let articleRendering = (function () {
         document.getElementById('edit-article').classList.add('invisible');
         document.getElementById('news').classList.remove('invisible');
         document.getElementById('glass').classList.add('invisible');
-        document.getElementById("filter-div").classList.add('invisible');
-        document.getElementById("login-div").classList.add('invisible');
-        document.getElementById("filter-form").author.value = "";
-        document.getElementById("filter-form").createdFrom.value = "";
-        document.getElementById("filter-form").createdBefore.value = "";
+        document.getElementById('filter-div').classList.add('invisible');
+        document.getElementById('login-div').classList.add('invisible');
+        document.getElementById('filter-form').author.value = '';
+        document.getElementById('filter-form').createdFrom.value = '';
+        document.getElementById('filter-form').createdBefore.value = '';
         show();
     }
 
     function showFilter() {
-        document.getElementById("glass").classList.remove('invisible');
+        document.getElementById('glass').classList.remove('invisible');
         // document.getElementById("login-div").classList.add('invisible');
-        document.getElementById("filter-div").classList.remove('invisible');
+        document.getElementById('filter-div').classList.remove('invisible');
     }
 
     function filter() {
-        document.getElementById("news").innerHTML = "";
+        document.getElementById('news').innerHTML = '';
         articleModel.getArticles(0, null, {
-            author: document.getElementById("filter-form").author.value,
-            createdFrom: new Date(document.getElementById("filter-form").createdFrom.value),
-            createdBefore: new Date(document.getElementById("filter-form").createdBefore.value)
-        }).forEach(item => {
+            author: document.getElementById('filter-form').author.value,
+            createdFrom: new Date(document.getElementById('filter-form').createdFrom.value),
+            createdBefore: new Date(document.getElementById('filter-form').createdBefore.value),
+        }).forEach((item) => {
             showArticle(item);
         });
-        document.getElementById("glass").classList.add('invisible');
-        document.getElementById("filter-div").classList.add('invisible');
+        document.getElementById('glass').classList.add('invisible');
+        document.getElementById('filter-div').classList.add('invisible');
     }
 
     function detailView(elem) {
         document.getElementById('add-article').classList.add('invisible');
-        let item = articleModel.getArticle(elem.dataset.id);
-        let tab = document.getElementById('article-tab')
+        const item = articleModel.getArticle(elem.dataset.id);
+        const tab = document.getElementById('article-tab');
         tab.innerHTML = '<h1>' + item.title + '</h1>' +
             '<img src=' + item.img + '>' +
             '<p>' + item.content + '</p>' +
@@ -231,10 +224,10 @@ let articleRendering = (function () {
         document.getElementById('edit-article').classList.add('invisible');
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('news').classList.add('invisible');
-        document.getElementById('add-form').heading.value = "";
-        document.getElementById('add-form').summary.value = "";
-        document.getElementById('add-form').image.value = "";
-        document.getElementById('add-form').paragraph.value = "";
+        document.getElementById('add-form').heading.value = '';
+        document.getElementById('add-form').summary.value = '';
+        document.getElementById('add-form').image.value = '';
+        document.getElementById('add-form').paragraph.value = '';
         document.getElementById('add-article').classList.remove('invisible');
     }
 
@@ -252,8 +245,8 @@ let articleRendering = (function () {
 
     function add() {
         dbModel.getName().then(
-            function (username) {
-                let article = {
+            (username) => {
+                const article = {
                     title: document.getElementById('add-form').heading.value,
                     summary: document.getElementById('add-form').summary.value,
                     content: document.getElementById('add-form').paragraph.value,
@@ -263,63 +256,49 @@ let articleRendering = (function () {
                     tags: document.getElementById('add-form').tags.value,
                 };
                 if (articleModel.validateArticle(article)) {
-                    dbModel.addArticle(article).then(function (ready) {
+                    dbModel.addArticle(article).then(() => {
                         startApp();
-                    })
+                    });
                 }
-            }
-        );
-
-
+            });
     }
 
     function remove(id) {
-        dbModel.deleteArticle(id).then(function (ready) {
+        dbModel.deleteArticle(id).then(() => {
             startApp();
         });
     }
 
     function edit(id) {
-        let article = articleModel.getArticle(id);
+        const article = articleModel.getArticle(id);
         article.title = document.getElementById('edit-form').heading.value;
         article.summary = document.getElementById('edit-form').summary.value;
         article.content = document.getElementById('edit-form').paragraph.value;
         article.img = document.getElementById('edit-form').image.value;
         article.tags = document.getElementById('edit-form').tags.value;
-        dbModel.editArticle(article).then(function (ready) {
+        dbModel.editArticle(article).then(() => {
             startApp();
         });
     }
 
     function btnCheck() {
         dbModel.getName().then(
-            function (username) {
-                document.getElementById("login-button").classList.add('invisible');
-                let userDiv = document.getElementById("username");
-                userDiv.firstElementChild.textContent = "Добрейший вечерочек, " + username + ' |';
+            (username) => {
+                document.getElementById('login-button').classList.add('invisible');
+                const userDiv = document.getElementById('username');
+                userDiv.firstElementChild.textContent = 'Добрейший вечерочек, ' + username + ' |';
                 userDiv.classList.remove('invisible');
-                let buttons = document.getElementsByClassName('admin-button');
-                for (let i = 0; i < buttons.length; i++)
-                    buttons[i].style.visibility = 'visible'
-            }
-        );
-
-
-        if (localStorage.getItem("user")) {
-            document.getElementById("login-button").classList.add('invisible');
-            let username = document.getElementById("username");
-            username.firstElementChild.textContent = "Привет, " + localStorage.getItem("user") + ' |';
-            username.classList.remove('invisible');
-            let buttons = document.getElementsByClassName('admin-button');
-            for (let i = 0; i < buttons.length; i++)
-                buttons[i].style.visibility = 'visible'
-        }
+                const buttons = document.getElementsByClassName('admin-button');
+                for (let i = 0; i < buttons.length; i++){
+                    buttons[i].style.visibility = 'visible';
+                }
+            });
     }
 
     function hide(event, id) {
-        let target = event.target;
+        const target = event.target;
         if (target.id === id) {
-            document.getElementById(id).classList.add("invisible");
+            document.getElementById(id).classList.add('invisible');
         }
     }
 
@@ -344,12 +323,9 @@ let articleRendering = (function () {
 }());
 
 function startApp() {
-    articleModel.replaceArticles().then(function (ready) {
+    articleModel.replaceArticles().then(() => {
         articleRendering.btnCheck();
         articleRendering.main();
     });
 }
 startApp();
-/*-------------------------------tests-------------------------------*/
-//articleModel.getArticles(0, 4, {author: 'Pahom'});//отображает выбранные новости на консоли(и сразу сортирует по новизне)
-/////////////////////////////////////////////////////////
