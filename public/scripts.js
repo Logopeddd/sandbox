@@ -13,10 +13,8 @@ const articleModel = (function () {
     }
 
     function getArticle(id) {
-        const article = articles.filter((item) => {
-            return item._id === id;
-        })[0];
-        console.log('getArticle: article' + id + ' - was returned');
+        const article = articles.filter(item => item._id === id)[0];
+        console.log(`getArticle: article ${id} - was returned`);
         return article;
     }
 
@@ -29,18 +27,16 @@ const articleModel = (function () {
     }
 
     function validateArticle(article) {
-        if (
-            article.createdAt instanceof Date &&
+        if (article.createdAt instanceof Date &&
             /* typeof article.tag == "object" && article.tag.length >= 1 && article.tag.length <= 5 &&*/
             typeof article.author === 'string' && article.author.length > 0 &&
             typeof article.summary === 'string' && article.summary.length > 0 &&
             typeof article.content === 'string' && article.content.length > 0 &&
             typeof article.title === 'string' && article.title.length > 0 && article.title.length < 100) {
-            // article.id = article.createdAt.toString() + article.author;
-            console.log('validateArticle: article' + article.id + ' ' + article.title + article.author + ' - ok');
+            console.log(`validateArticle: article ${article.id} ${article.title} ${article.author} - ok`);
             return true;
         }
-        console.log('validateArticle: article' + article.id + ' ' + article.title + article.author + " - isn't ok");
+        console.log(`validateArticle: article ${article.id} ${article.title} ${article.author} - isn't ok`);
         return false;
     }
 
@@ -62,18 +58,16 @@ const articleModel = (function () {
                     return (item.createdAt.getTime() > filterConfig.createdFrom.getTime());
                 });
             }
-            if (filterConfig.createdBefore !== "Invalid Date") {
-                filtered = filtered.filter((item) => {
-                    return (item.createdAt.getTime() < filterConfig.createdBefore.getTime());
-                });
+            if (filterConfig.createdBefore !== 'Invalid Date') {
+                filtered = filtered.filter(item =>
+                    (item.createdAt.getTime() < filterConfig.createdBefore.getTime()));
             }
         }
-        filtered.sort((a, b) => {
-            return b.createdAt - a.createdAt;
-        });
+        filtered.sort((a, b) => b.createdAt - a.createdAt);
         console.log('getArticles:');
         filtered.forEach((item) => {
             console.log(item._id + ' ' + item.title);
+            console.log(`${item._id} ${item.title}`);
         });
         return filtered;
     }
@@ -86,11 +80,11 @@ const articleModel = (function () {
         getArticlesAt,
         getArticle,
         validateArticle,
-        getArticles
+        getArticles,
     };
 }());
 
-let articleRendering = (function () {
+const articleRendering = (function () {
     const options = {
         year: 'numeric',
         month: 'numeric',
@@ -153,9 +147,8 @@ let articleRendering = (function () {
     function signIn() {
         const username = document.getElementById('login-form').login.value;
         const password = document.getElementById('login-form').password.value;
-        dbModel.logIn({username, password}).then(
+        dbModel.logIn({ username, password }).then(
             () => {
-                const username = document.getElementById('username');
                 btnCheck();
                 document.getElementById('glass').classList.add('invisible');
                 document.getElementById('login-div').classList.add('invisible');
@@ -232,7 +225,7 @@ let articleRendering = (function () {
     }
 
     function showEditPage(id) {
-        let item = articleModel.getArticle(id);
+        const item = articleModel.getArticle(id);
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('edit-form').heading.value = item.title;
         document.getElementById('edit-form').summary.value = item.summary;
@@ -286,10 +279,10 @@ let articleRendering = (function () {
             (username) => {
                 document.getElementById('login-button').classList.add('invisible');
                 const userDiv = document.getElementById('username');
-                userDiv.firstElementChild.textContent = 'Добрейший вечерочек, ' + username + ' |';
+                userDiv.firstElementChild.textContent = `Добрейший вечерочек, ${username} |`;
                 userDiv.classList.remove('invisible');
                 const buttons = document.getElementsByClassName('admin-button');
-                for (let i = 0; i < buttons.length; i++){
+                for (let i = 0; i < buttons.length; i++) {
                     buttons[i].style.visibility = 'visible';
                 }
             });
@@ -318,7 +311,7 @@ let articleRendering = (function () {
         main,
         add,
         edit,
-        hide
+        hide,
     };
 }());
 

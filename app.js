@@ -11,7 +11,7 @@ const app = express();
 const store = new SessionStore({ url: 'mongodb://localhost/1' });
 
 app.set('port', (process.env.PORT || 3000));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -19,7 +19,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
-    store: store,
+    store,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -33,9 +33,9 @@ passport.deserializeUser((user, done) => {
 
 passport.use('login', new LocalStrategy({ passReqToCallback: true },
     (req, username, password, done) => {
-        users.findOne({ username: username }, (err, user) => {
+        users.findOne({ username }, (err, user) => {
             if (!user) {
-                console.log('User Not Found with username ' + username);
+                console.log(`User Not Found with username ${username}`);
                 return done(null, false, { message: 'user not found' });
             }
             if (password !== user.password) {
@@ -64,13 +64,13 @@ app.get('/articles/:id', (req, res) => {
 });
 
 app.patch('/articles', (req, res) => {
-    Articles.findByIdAndUpdate(req.body._id, { $set: req.body }, err => !err ? res.sendStatus(200) : res.sendStatus(500));
+    Articles.findByIdAndUpdate(req.body._id, { $set: req.body }, err =>
+        !err ? res.sendStatus(200) : res.sendStatus(500));
 });
 
 app.delete('/articles/:id', (req, res) => {
-    Articles.findByIdAndRemove(req.params.id, (err) => {
-        !err ? res.sendStatus(200) : res.sendStatus(500);
-    });
+    Articles.findByIdAndRemove(req.params.id, err =>
+        !err ? res.sendStatus(200) : res.sendStatus(500));
 });
 
 app.post('/articles', (req, res) => {

@@ -3,7 +3,7 @@ const dbModel = (function () {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
             req.open('GET', '/articles');
-            req.onload = function () {
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve(JSON.parse(req.response, (key, value) => {
                         if (key === 'createdAt') return new Date(value);
@@ -11,7 +11,7 @@ const dbModel = (function () {
                     }));
                 }
             };
-            req.onerror = function () {
+            req.onerror = () => {
                 reject(new Error('Error'));
             };
             req.send();
@@ -23,12 +23,12 @@ const dbModel = (function () {
             const req = new XMLHttpRequest();
             req.open('POST', '/articles');
             req.setRequestHeader('content-type', 'application/json');
-            req.onload = function () {
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve();
                 }
             };
-            req.onerror = function () {
+            req.onerror = () => {
                 reject(new Error('Error'));
             };
             req.send(JSON.stringify(article));
@@ -38,13 +38,13 @@ const dbModel = (function () {
     function deleteArticle(id) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
-            req.open('DELETE', '/articles/' + id);
-            req.onload = function () {
+            req.open('DELETE', `/articles/ ${id}`);
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve();
                 }
             };
-            req.onerror = function () {
+            req.onerror = () => {
                 reject(new Error('Error'));
             };
             req.send();
@@ -56,12 +56,12 @@ const dbModel = (function () {
             const req = new XMLHttpRequest();
             req.open('PATCH', '/articles');
             req.setRequestHeader('content-type', 'application/json');
-            req.onload = function () {
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve();
                 }
             };
-            req.onerror = function () {
+            req.onerror = () => {
                 reject(new Error('Error'));
             };
             req.send(JSON.stringify(article));
@@ -73,14 +73,14 @@ const dbModel = (function () {
             const req = new XMLHttpRequest();
             req.open('POST', '/login');
             req.setRequestHeader('content-type', 'application/json');
-            req.onload = function () {
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve();
                 } else {
                     reject();
                 }
             };
-            req.onerror = function () {
+            req.onerror = () => {
                 reject(new Error('Error'));
             };
             req.send(JSON.stringify(user));
@@ -91,7 +91,7 @@ const dbModel = (function () {
         return new Promise((resolve) => {
             const req = new XMLHttpRequest();
             req.open('GET', '/logout');
-            req.onload = function () {
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve();
                 }
@@ -104,14 +104,14 @@ const dbModel = (function () {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
             req.open('GET', '/username');
-            req.onload = function () {
+            req.onload = () => {
                 if (req.status === 200) {
                     resolve(req.responseText);
                 } else {
                     reject();
                 }
             };
-            req.onerror = function () {
+            req.onerror = () => {
                 reject(new Error('Error'));
             };
             req.send();
@@ -125,6 +125,6 @@ const dbModel = (function () {
         deleteArticle,
         logIn,
         logOut,
-        getName
+        getName,
     };
 }());
