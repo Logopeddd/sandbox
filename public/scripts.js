@@ -28,7 +28,8 @@ const articleModel = (function () {
 
     function validateArticle(article) {
         if (article.createdAt instanceof Date &&
-            /* typeof article.tag == "object" && article.tag.length >= 1 && article.tag.length <= 5 &&*/
+            /* typeof article.tag == "object" && article.tag.length >= 1 &&
+            article.tag.length <= 5 &&*/
             typeof article.author === 'string' && article.author.length > 0 &&
             typeof article.summary === 'string' && article.summary.length > 0 &&
             typeof article.content === 'string' && article.content.length > 0 &&
@@ -46,6 +47,7 @@ const articleModel = (function () {
         if (skip > articles.length) {
             return null;
         }
+        console.log(filterConfig);
         let filtered = articles.slice(skip, top + skip);
         if (filterConfig) {
             if (typeof filterConfig.author === 'string' && filterConfig.author.length > 0) {
@@ -53,16 +55,18 @@ const articleModel = (function () {
                     return (filterConfig.author === item.author);
                 });
             }
-            if (filterConfig.createdFrom !== 'Invalid Date') {
+            console.log(filtered);
+            if (filterConfig.createdFrom != 'Invalid Date') {
                 filtered = filtered.filter((item) => {
                     return (item.createdAt.getTime() > filterConfig.createdFrom.getTime());
                 });
             }
-            if (filterConfig.createdBefore !== 'Invalid Date') {
+            if (filterConfig.createdBefore != 'Invalid Date') {
                 filtered = filtered.filter(item =>
                     (item.createdAt.getTime() < filterConfig.createdBefore.getTime()));
             }
         }
+        console.log(filtered);
         filtered.sort((a, b) => b.createdAt - a.createdAt);
         console.log('getArticles:');
         filtered.forEach((item) => {

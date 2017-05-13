@@ -26,6 +26,7 @@ p {
 }
 
 .header {
+    z-index: 10;
     width: 100%;
     min-width: 940px;
     height: 120px;
@@ -33,7 +34,8 @@ p {
 
 .center {
     position: relative;
-    width: 80%;
+    width: 96%;
+    max-width: calc(1500px + 14%);
     min-width: 940px;
     height: inherit;
     margin: 0 auto 0 auto;
@@ -41,7 +43,7 @@ p {
 }
 
 .block1 {
-    background-color: #3d8af7;
+    background-color: #448aff;
     width: 100%;
     height: 80px;
 }
@@ -50,7 +52,7 @@ p {
     position: absolute;
     left: 10px;
     bottom: 5px;
-    color: #a8c6fa;
+    color: #f4f9ff;
     font-size: 16px;
     cursor: pointer;
 }
@@ -59,19 +61,25 @@ p {
     position: absolute;
     left: 10px;
     bottom: 5px;
-    color: #a8c6fa;
+    color: #f4f9ff;
     font-size: 16px;
 }
 
 #logo {
-    background: url(./img/logo.png) no-repeat;
-    width: 300px;
-    height: 70px;
+    /*background: url(./img/logo.png) no-repeat;*/
+    /*!*width: 300px;*!*/
+    /*height: 5%;*/
+    width:20%;
+    height:100%;
     margin: 5px 0 5px auto;
     float: right;
 }
+#logo img{
+    height: 130%;
+}
 
 .block2 {
+    /*background-color: #216bd4;*/
     background-color: #216bd4;
     width: 100%;
     height: 40px;
@@ -116,7 +124,7 @@ p {
 ul.sub_menu {
     padding: 0;
     display: none;
-    z-index: 1;
+    /*z-index: 1;*/
     position: absolute;
     width: 150px;
     top: 40px;
@@ -139,7 +147,7 @@ ul.sub_menu {
 
 #top_menu > li:hover {
     background-image: none;
-    background-color: #a8c6fa;
+    background-color: #88acd6;
 }
 
 #top_menu > li:hover > ul.sub_menu {
@@ -255,8 +263,8 @@ ul.sub_menu {
 
 .tab > span {
     display: inline-block;
-     position: absolute;
-     right: 15px;
+    position: absolute;
+    right: 15px;
     color: #7a7a7a;
     bottom: 15px;
 }
@@ -294,14 +302,14 @@ ul.sub_menu {
     left: 0;
     bottom: 0;
     /*min-width: 940px;*/
-    z-index: 2;
+    z-index: 10;
     width: 100%;
     height: 100%;
     background: rgba(54, 54, 54, 0.7);
 }
 
 #glass div {
-    z-index: 2;
+    z-index: 10;
     position: fixed;
     top: 25vh;
     left: calc(50% - 150px);
