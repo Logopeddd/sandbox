@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>News</title>
+    <title>HNews</title>
     <link rel="shortcut icon" href="/img/icon.png" type="image/png">
 </head>
 <link href="style.css" rel="stylesheet">
@@ -18,7 +18,7 @@
             <div id="login-button">
                 <a class="button" onclick="articleRendering.logIn()">Войти</a>
             </div>
-            <div id="logo"  title="Вернуться на главную" onclick="articleRendering.main()">
+            <div id="logo" title="Вернуться на главную" onclick="startApp()">
                 <img class="button" src="/img/logo.png">
             </div>
         </div>
@@ -26,20 +26,22 @@
     <div class="block2">
         <div class="center">
             <ul id="top_menu">
-                <li onclick="articleRendering.main()"><img id="home" src="./img/home__.png" width="20" height="20" alt="home"></li>
-                <li>политика</li>
-                <li>общество</li>
-                <li>спорт</li>
-                <li>финансы</li>
-                <li>в мире</li>
-                <li>наука</li>
-                <li>происшествия</li>
-                <li onclick="articleRendering.showFilter()"><img id="filter" src="./img/filter.png" width="20" height="20" alt="filter" ></li>
-                    <!--<ul class="sub_menu">-->
-                        <!--<li><a href=#>filter 1</a></li>-->
-                        <!--<li><a href=#>filter 2</a></li>-->
-                        <!--<li><a href=#>filter 3</a></li>-->
-                    <!--</ul>-->
+                <li id="back" class='invisible' onclick="startApp()"><img src="./img/left.png" width="26" height="26" alt="back"></li>
+                <li id="up" class='invisible' onclick=""><img src="./img/up.png" width="26" height="26" alt="up"></li>
+                <li>ПОЛИТИКА</li>
+                <li>ОБЩЕСТВО</li>
+                <li>СПОРТ</li>
+                <li>ФИНАНСЫ</li>
+                <li>В МИРЕ</li>
+                <li>НАУКА</li>
+                <li>ПРОИСШЕСТВИЯ</li>
+                <li onclick="articleRendering.showFilter()"><img id="filter" src="./img/filter.png" width="20"
+                                                                 height="20" alt="filter"></li>
+                <!--<ul class="sub_menu">-->
+                <!--<li><a href=#>filter 1</a></li>-->
+                <!--<li><a href=#>filter 2</a></li>-->
+                <!--<li><a href=#>filter 3</a></li>-->
+                <!--</ul>-->
 
             </ul>
 
@@ -72,8 +74,10 @@
             <fieldset>
                 <form id="filter-form" action="javascript:articleRendering.filter();" method="get">
                     <input name="author" type="text" placeholder="Автор">
-                    <input name="createdFrom"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="с">
-                    <input name="createdBefore"  type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="по">
+                    <input name="createdFrom" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                           placeholder="с">
+                    <input name="createdBefore" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                           placeholder="по">
                     <input type="submit" value="Показать">
                 </form>
             </fieldset>
@@ -106,12 +110,15 @@
     </div>
 </div>
 <footer class="footer">
-    <a id="left"><br>HNews, 02.05.2017</a>
-    <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V., the 5th group, II course</a>
+    <div class="center">
+        <a id="left"><br>HNews, 13.05.2017</a>
+        <a id="right">logopeddd@inbox.ru<br>Hadanyonok E.V., the 5th group, II course</a>
+    </div>
 </footer>
 
 <script type="text/javascript" src="http.js"></script>
 <script type="text/javascript" src="scripts.js"></script>
 <script type="text/javascript" src="scroll.js"></script>
+<script src="https://use.fontawesome.com/eb0ca1c71f.js"></script>
 </body>
 </html>

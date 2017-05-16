@@ -1,8 +1,8 @@
 const dbModel = (function () {
-    function getArray() {
+    function getArticle(id) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
-            req.open('GET', '/articles');
+            req.open('GET', `/articles/${id}`);
             req.onload = () => {
                 if (req.status === 200) {
                     resolve(JSON.parse(req.response, (key, value) => {
@@ -15,6 +15,26 @@ const dbModel = (function () {
                 reject(new Error('Error'));
             };
             req.send();
+        });
+    }
+
+    function getArticles(skip, top, filterConfig) {
+        return new Promise((resolve, reject) => {
+            const req = new XMLHttpRequest();
+            req.open('PUT', '/articles');
+            req.setRequestHeader('content-type', 'application/json');
+            req.onload = () => {
+                if (req.status === 200) {
+                    resolve(JSON.parse(req.response, (key, value) => {
+                        if (key === 'createdAt') return new Date(value);
+                        return value;
+                    }));
+                }
+            };
+            req.onerror = () => {
+                reject(new Error('Error'));
+            };
+            req.send(JSON.stringify({ skip, top, filterConfig }));
         });
     }
 
@@ -38,7 +58,7 @@ const dbModel = (function () {
     function deleteArticle(id) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
-            req.open('DELETE', `/articles/ ${id}`);
+            req.open('DELETE', `/articles/${id}`);
             req.onload = () => {
                 if (req.status === 200) {
                     resolve();
@@ -119,7 +139,9 @@ const dbModel = (function () {
     }
 
     return {
-        getArray,
+        // getArray,
+        getArticle,
+        getArticles,
         editArticle,
         addArticle,
         deleteArticle,

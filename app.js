@@ -36,7 +36,7 @@ passport.use('login', new LocalStrategy({ passReqToCallback: true },
         users.findOne({ username }, (err, user) => {
             if (!user) {
                 console.log(`User Not Found with username ${username}`);
-                return done(null, false, { message: 'user not found' });
+                return done(null, false, {message: 'user not found'});
             }
             if (password !== user.password) {
                 console.log('Invalid Password');
@@ -55,12 +55,39 @@ app.get('/logout', (req, res) => {
 
 app.get('/username', (req, res) => req.user ? res.send(req.user.username) : res.sendStatus(401));
 
-app.get('/articles', (req, res) => {
-    Articles.find((err, data) => !err ? res.json(data) : res.sendStatus(500));
+app.put('/articles', (req, res) => {
+    const config = {};
+    if (req.body.filterConfig) {
+        if (typeof req.body.filterConfig.author === 'string' && req.body.filterConfig.author.length > 0) {
+            config.author = req.body.filterConfig.author;
+        }
+        if (req.body.filterConfig.createdFrom || req.body.filterConfig.createdBefore) {
+            config.createdAt = {};
+            if (req.body.filterConfig.createdFrom) {
+                config.createdAt.$gte = new Date(req.body.filterConfig.createdFrom);
+            }
+            if (req.body.filterConfig.createdBefore) {
+                config.createdAt.$lte = new Date(req.body.filterConfig.createdBefore);
+            }
+        }
+    }
+    Articles.find(config)
+        .skip(req.body.skip || 0)
+        .limit(req.body.top || 0)
+        .sort({createdAt: -1})
+        .exec((err, data) => !err ? res.json(filtered = data) : res.sendStatus(500));
 });
+// Articles.find(config).sort({createdAt: -1}).exec((err, data) =>
+//     !err ? res.json(filtered = data) : res.sendStatus(500));
+// });
 
 app.get('/articles/:id', (req, res) => {
-    Articles.findById(req.body.id, (err, data) => !err ? res.json(data) : res.sendStatus(500));
+    Articles.findById(req.params.id, (err, article) => {
+        if (!article) {
+            res.statusCode = 404;
+        }
+        !err ? res.json(article) : res.sendStatus(500);
+    });
 });
 
 app.patch('/articles', (req, res) => {

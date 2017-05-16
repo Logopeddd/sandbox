@@ -5,23 +5,23 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
-    font-family: "Comic Sans MS", Aclonica, cursive;
+    font-family: Tahoma, Arial, Helvetica, freesans, sans-serif;
     /*background-image: url(./img/glass-pat-004.jpg);*/
 }
 
 h2 {
-    color: #b38df7;
+    font-weight: bold;
+    color: #212121;
     margin-top: 0;
 }
 
 p {
     font-size: 21px;
-    font-family: sans-serif;
     color: #444444;
 }
 
 .button {
-    text-decoration: underline;
+    /*text-decoration: underline;*/
     cursor: pointer;
 }
 
@@ -50,7 +50,7 @@ p {
 
 #username {
     position: absolute;
-    left: 10px;
+    right: 10px;
     bottom: 5px;
     color: #f4f9ff;
     font-size: 16px;
@@ -59,22 +59,21 @@ p {
 
 #login-button {
     position: absolute;
-    left: 10px;
+    right: 10px;
     bottom: 5px;
     color: #f4f9ff;
     font-size: 16px;
+    font-weight: bold;
 }
 
 #logo {
-    /*background: url(./img/logo.png) no-repeat;*/
-    /*!*width: 300px;*!*/
-    /*height: 5%;*/
-    width:20%;
-    height:100%;
+    position: absolute;
+    height: 100%;
     margin: 5px 0 5px auto;
-    float: right;
+    float: left;
 }
-#logo img{
+
+#logo img {
     height: 130%;
 }
 
@@ -87,7 +86,7 @@ p {
 
 #top_menu {
     font-weight: bold;
-    margin: 0;
+    margin: 0 0 0 140px;
     padding: 0;
     float: left;
     border: 0;
@@ -97,28 +96,28 @@ p {
 #top_menu > li {
     list-style: none;
     float: left;
-    display: block;
+    /*display: block;*/
     padding: 0 10px 0 10px;
     height: 40px;
     text-align: center;
     font-size: 21px;
-    background: url(./img/top_menu_li_bg.png) no-repeat center left;
-    color: #fff;
+    background: url(./img/top_menu_li_bg.png) no-repeat center right;
+    /*color: #fff;*/
+    color: #f4f9ff;
     line-height: 40px;
     cursor: pointer;
 }
 
-#top_menu > li:first-child {
-    width: 24px;
+#top_menu > li:last-child {
     background: none;
-}
-
-#top_menu > li:first-child > a {
-    height: inherit;
 }
 
 #filter {
     margin: 11px 2px 9px 2px;
+}
+
+#back>img {
+    margin: 7px 0 7px 0;
 }
 
 ul.sub_menu {
@@ -197,6 +196,7 @@ ul.sub_menu {
     flex: 1 0 auto;
     position: relative;
     /*background: rgba(255, 255, 255, 0.9);*/
+    background-color: #f4f9ff;
     width: 100%;
     min-width: 940px;
     margin: 0 auto 0 auto;
@@ -292,7 +292,9 @@ ul.sub_menu {
     height: 50px;
     width: 100%;
     min-width: 940px;
-    background-color: rgba(241, 244, 249, 0.8);
+    background-color: rgba(152, 173, 208, 0.3);
+    color: #7a7a7a;
+    /*background-color: #88acd6;*/
 }
 
 #glass {

@@ -1,35 +1,10 @@
 const articleModel = (function () {
     let tagList = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
-    let articles = [];
-
-    function replaceArticles() {
-        return new Promise((resolve) => {
-            dbModel.getArray().then((response) => {
-                articles = response;
-                articles.sort((a, b) => b.createdAt - a.createdAt);
-                resolve();
-            });
-        });
-    }
-
-    function getArticle(id) {
-        const article = articles.filter(item => item._id === id)[0];
-        console.log(`getArticle: article ${id} - was returned`);
-        return article;
-    }
-
-    function getArticlesLength() {
-        return articles.length;
-    }
-
-    function getArticlesAt(index) {
-        return articles[index];
-    }
 
     function validateArticle(article) {
         if (article.createdAt instanceof Date &&
             /* typeof article.tag == "object" && article.tag.length >= 1 &&
-            article.tag.length <= 5 &&*/
+             article.tag.length <= 5 &&*/
             typeof article.author === 'string' && article.author.length > 0 &&
             typeof article.summary === 'string' && article.summary.length > 0 &&
             typeof article.content === 'string' && article.content.length > 0 &&
@@ -41,50 +16,9 @@ const articleModel = (function () {
         return false;
     }
 
-    function getArticles(skip, top, filterConfig) {
-        skip = skip || 0;
-        top = top || articles.length;
-        if (skip > articles.length) {
-            return null;
-        }
-        console.log(filterConfig);
-        let filtered = articles.slice(skip, top + skip);
-        if (filterConfig) {
-            if (typeof filterConfig.author === 'string' && filterConfig.author.length > 0) {
-                filtered = filtered.filter((item) => {
-                    return (filterConfig.author === item.author);
-                });
-            }
-            console.log(filtered);
-            if (filterConfig.createdFrom != 'Invalid Date') {
-                filtered = filtered.filter((item) => {
-                    return (item.createdAt.getTime() > filterConfig.createdFrom.getTime());
-                });
-            }
-            if (filterConfig.createdBefore != 'Invalid Date') {
-                filtered = filtered.filter(item =>
-                    (item.createdAt.getTime() < filterConfig.createdBefore.getTime()));
-            }
-        }
-        console.log(filtered);
-        filtered.sort((a, b) => b.createdAt - a.createdAt);
-        console.log('getArticles:');
-        filtered.forEach((item) => {
-            console.log(item._id + ' ' + item.title);
-            console.log(`${item._id} ${item.title}`);
-        });
-        return filtered;
-    }
-
     return {
-        articles,
         tagList,
-        replaceArticles,
-        getArticlesLength,
-        getArticlesAt,
-        getArticle,
         validateArticle,
-        getArticles,
     };
 }());
 
@@ -103,7 +37,7 @@ const articleRendering = (function () {
         const news = document.getElementById('news');
         const tab = document.createElement('div');
         tab.innerHTML = "<div class='tab resize' data-id='" + item._id + "'>" +
-            "<h2 onclick = 'articleRendering.detailView(this.parentNode)' class='button'>" + item.title + "</h2>" +
+            "<h2 onclick = 'articleRendering.detailView(this.parentNode.dataset.id)' class='button'>" + item.title + "</h2>" +
             "<img src=" + item.img + ">" +
             "<p>" + item.summary + "</p>" +
             "<span class='tags'>" + "#" + item.tags + "</span>" +
@@ -111,35 +45,97 @@ const articleRendering = (function () {
         news.appendChild(tab.firstChild);
     }
 
-    function showFrom(first) {
-        const news = document.getElementById('news');
-        if (news.lastChild && news.lastChild.classList.contains('pagination')) {
-            news.removeChild(news.lastChild);
-        }
-        articleModel.getArticles(first, first + 12).forEach((item) => {
-            showArticle(item);
+    // function showFrom(first) {
+    //     const news = document.getElementById('news');
+    //     if (news.lastChild && news.lastChild.classList.contains('pagination')) {
+    //         news.removeChild(news.lastChild);
+    //     }
+    //     articleModel.getArticles(first, first + 12).forEach((item) => {
+    //         showArticle(item);
+    //     });
+    //     const Main = news.firstElementChild;
+    //     Main.classList.add('main');
+    //     Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
+    //     if (first + 11 < articleModel.getArticlesLength()) {
+    //         const tab = document.createElement('div');
+    //         tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
+    //         news.appendChild(tab.firstChild);
+    //     }
+    // }
+    //
+    // function show() {
+    //     // const news = document.getElementById('news');
+    //     // while (news.firstElementChild) {
+    //     //     news.removeChild(news.firstElementChild);
+    //     // }
+    //     document.getElementById('news').innerHTML = '';
+    //     showFrom(0);
+    // }
+
+    function showFrom(skip) {
+        dbModel.getArticles(0, 0, {
+            author: document.getElementById('filter-form').author.value,
+            createdFrom: new Date(document.getElementById('filter-form').createdFrom.value),
+            createdBefore: new Date(document.getElementById('filter-form').createdBefore.value),
+        }).then((articles) => {
+            const news = document.getElementById('news');
+            if (news.lastChild && news.lastChild.classList.contains('pagination')) {
+                news.removeChild(news.lastChild);
+            }
+            articles.slice(skip, skip + 12).forEach(item => showArticle(item));
+            const Main = news.firstElementChild;
+            Main.classList.add('main');
+            Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
+            if (skip + 12 < articles.length) {
+                const tab = document.createElement('div');
+                tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
+                news.appendChild(tab.firstChild);
+            }
         });
-        const Main = news.firstElementChild;
-        Main.classList.add('main');
-        Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
-        if (first + 11 < articleModel.getArticlesLength()) {
-            const tab = document.createElement('div');
-            tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
-            news.appendChild(tab.firstChild);
-        }
     }
 
-    function show() {
-        const news = document.getElementById('news');
-        while (news.firstElementChild) {
-            news.removeChild(news.firstElementChild);
-        }
-        showFrom(0);
-    }
+    // function showFrom(first) {
+    //     // const filter = document.getElementById('filter-form');
+    //     // let filterConfig;
+    //     //             if (typeof filter.author === 'string' && filter.author.length > 0) {
+    //     //                 filterConfig.author = filter.author;
+    //     //             }
+    //     //             if (filter.createdFrom != 'Invalid Date') {
+    //     //                 filterConfig
+    //     //             }
+    //     //             if (filterConfig.createdBefore != 'Invalid Date') {
+    //     //                 filtered = filtered.filter(item =>
+    //     //                     (item.createdAt.getTime() < filterConfig.createdBefore.getTime()));
+    //     //             }
+    //
+    //     dbModel.getArticles(first).then((articles) => {
+    //         console.log(articles);
+    //         const news = document.getElementById('news');
+    //         if (news.lastChild && news.lastChild.classList.contains('pagination')) {
+    //             news.removeChild(news.lastChild);
+    //         }
+    //         for (let i = 0; i < 12 && i < articles.length; i++) {
+    //             showArticle(articles[i]);
+    //         }
+    //         // articles.forEach((item) => {
+    //         //     showArticle(item);
+    //         // });
+    //         const Main = news.firstElementChild;
+    //         Main.classList.add('main');
+    //         Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
+    //         if (first + 11 < articles.length) {
+    //             const tab = document.createElement('div');
+    //             tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
+    //             news.appendChild(tab.firstChild);
+    //         }
+    //     });
+    // }
 
     function showMore() {
-        const news = document.getElementById('news');
-        showFrom(news.childNodes.length - 1);
+        dbModel.getArticles().then((articles) => {
+            const news = document.getElementById('news');
+            showFrom(news.childNodes.length - 1);
+        });
     }
 
     function logIn() {
@@ -151,7 +147,7 @@ const articleRendering = (function () {
     function signIn() {
         const username = document.getElementById('login-form').login.value;
         const password = document.getElementById('login-form').password.value;
-        dbModel.logIn({ username, password }).then(
+        dbModel.logIn({username, password}).then(
             () => {
                 btnCheck();
                 document.getElementById('glass').classList.add('invisible');
@@ -169,6 +165,8 @@ const articleRendering = (function () {
     }
 
     function main() {
+        document.getElementById('back').classList.add('invisible');
+        document.getElementById('up').classList.add('invisible');
         document.getElementById('article-tab').classList.add('invisible');
         document.getElementById('add-article').classList.add('invisible');
         document.getElementById('edit-article').classList.add('invisible');
@@ -179,65 +177,65 @@ const articleRendering = (function () {
         document.getElementById('filter-form').author.value = '';
         document.getElementById('filter-form').createdFrom.value = '';
         document.getElementById('filter-form').createdBefore.value = '';
-        show();
+        document.getElementById('news').innerHTML = '';
+
     }
 
     function showFilter() {
         document.getElementById('glass').classList.remove('invisible');
-        // document.getElementById("login-div").classList.add('invisible');
+        document.getElementById('login-div').classList.add('invisible');
         document.getElementById('filter-div').classList.remove('invisible');
     }
 
     function filter() {
         document.getElementById('news').innerHTML = '';
-        articleModel.getArticles(0, null, {
-            author: document.getElementById('filter-form').author.value,
-            createdFrom: new Date(document.getElementById('filter-form').createdFrom.value),
-            createdBefore: new Date(document.getElementById('filter-form').createdBefore.value),
-        }).forEach((item) => {
-            showArticle(item);
-        });
-        document.getElementById('glass').classList.add('invisible');
-        document.getElementById('filter-div').classList.add('invisible');
+        articleRendering.showFrom(0);
+        main();
     }
 
-    function detailView(elem) {
-        document.getElementById('add-article').classList.add('invisible');
-        const item = articleModel.getArticle(elem.dataset.id);
-        const tab = document.getElementById('article-tab');
-        tab.innerHTML = '<h1>' + item.title + '</h1>' +
-            '<img src=' + item.img + '>' +
-            '<p>' + item.content + '</p>' +
-            '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item._id + '\')" value="Редактировать">' +
-            '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item._id + '\')" value="Удалить">' +
-            '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> '
-        ;
-        document.getElementById('news').classList.add('invisible');
-        btnCheck();
-        tab.classList.remove('invisible');
+    function detailView(id) {
+        dbModel.getArticle(id).then((item) => {
+            const tab = document.getElementById('article-tab');
+            tab.innerHTML = '<h1>' + item.title + '</h1>' +
+                '<img src=' + item.img + '>' +
+                '<p>' + item.content + '</p>' +
+                '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item._id + '\')" value="Редактировать">' +
+                '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item._id + '\')" value="Удалить">' +
+                '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> '
+            ;
+            document.getElementById('news').classList.add('invisible');
+            btnCheck();
+            tab.classList.remove('invisible');
+            document.getElementById('back').classList.remove('invisible');
+        });
     }
 
     function showAddPage() {
         document.getElementById('edit-article').classList.add('invisible');
         document.getElementById('article-tab').classList.add('invisible');
+        document.getElementById('filter-div').classList.add('invisible');
+        document.getElementById('glass').classList.add('invisible');
         document.getElementById('news').classList.add('invisible');
         document.getElementById('add-form').heading.value = '';
         document.getElementById('add-form').summary.value = '';
         document.getElementById('add-form').image.value = '';
         document.getElementById('add-form').paragraph.value = '';
         document.getElementById('add-article').classList.remove('invisible');
+        document.getElementById('back').classList.remove('invisible');
     }
 
     function showEditPage(id) {
-        const item = articleModel.getArticle(id);
-        document.getElementById('article-tab').classList.add('invisible');
-        document.getElementById('edit-form').heading.value = item.title;
-        document.getElementById('edit-form').summary.value = item.summary;
-        document.getElementById('edit-form').image.value = item.img;
-        document.getElementById('edit-form').paragraph.value = item.content;
-        document.getElementById('edit-form').tags.value = item.tags;
-        document.getElementById('edit-form').setAttribute('action', "javascript:articleRendering.edit('" + id + "')");
-        document.getElementById('edit-article').classList.remove('invisible');
+        dbModel.getArticle(id).then((item) => {
+            document.getElementById('article-tab').classList.add('invisible');
+            document.getElementById('edit-form').heading.value = item.title;
+            document.getElementById('edit-form').summary.value = item.summary;
+            document.getElementById('edit-form').image.value = item.img;
+            document.getElementById('edit-form').paragraph.value = item.content;
+            document.getElementById('edit-form').tags.value = item.tags;
+            document.getElementById('edit-form').setAttribute('action', "javascript:articleRendering.edit('" + id + "')");
+            document.getElementById('edit-article').classList.remove('invisible');
+            document.getElementById('back').classList.remove('invisible');
+        });
     }
 
     function add() {
@@ -267,15 +265,14 @@ const articleRendering = (function () {
     }
 
     function edit(id) {
-        const article = articleModel.getArticle(id);
-        article.title = document.getElementById('edit-form').heading.value;
-        article.summary = document.getElementById('edit-form').summary.value;
-        article.content = document.getElementById('edit-form').paragraph.value;
-        article.img = document.getElementById('edit-form').image.value;
-        article.tags = document.getElementById('edit-form').tags.value;
-        dbModel.editArticle(article).then(() => {
-            startApp();
-        });
+        dbModel.editArticle({
+            _id: id,
+            title: document.getElementById('edit-form').heading.value,
+            summary: document.getElementById('edit-form').summary.value,
+            content: document.getElementById('edit-form').paragraph.value,
+            img: document.getElementById('edit-form').image.value,
+            tags: document.getElementById('edit-form').tags.value,
+        }).then(() => startApp());
     }
 
     function btnCheck() {
@@ -302,7 +299,7 @@ const articleRendering = (function () {
     return {
         remove,
         btnCheck,
-        show,
+        showFrom,
         showMore,
         logIn,
         signIn,
@@ -320,9 +317,7 @@ const articleRendering = (function () {
 }());
 
 function startApp() {
-    articleModel.replaceArticles().then(() => {
-        articleRendering.btnCheck();
-        articleRendering.main();
-    });
+    articleRendering.main();
+    articleRendering.showFrom(0);
 }
 startApp();
