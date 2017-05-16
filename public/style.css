@@ -477,14 +477,16 @@ ul.sub_menu {
     transform: scale(1.02);
 }
 
-#left {
+#project {
     float: left;
     text-align: left;
+    line-height: 50px;
 }
 
-#right {
+#creator {
     float: right;
     text-align: right;
+    padding: 6px 0;
 }
 
 .visible {
