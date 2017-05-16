@@ -116,8 +116,10 @@ p {
     margin: 11px 2px 9px 2px;
 }
 
-#back>img {
-    margin: 7px 0 7px 0;
+.icon>img {
+    /*margin: 7px 0 7px 0;*/
+    height: 65%;
+    vertical-align: sub;
 }
 
 ul.sub_menu {

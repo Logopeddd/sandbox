@@ -2,13 +2,15 @@
 
 window.onscroll = () => {
     const header = document.querySelector('.header');
-    const content = document.getElementById('content')
+    const content = document.getElementById('content');
     if (window.pageYOffset >= 80) {
+        document.getElementById('up').classList.remove('invisible');
         header.firstElementChild.style.display = 'none';
         header.style.position = 'fixed';
         header.style.opacity = '0.95';
         content.style.margin = '120px auto 0 auto';
     } else {
+        document.getElementById('up').classList.add('invisible');
         header.firstElementChild.style.display = 'block';
         header.style.position = null;
         header.style.opacity = null;
