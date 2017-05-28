@@ -26,25 +26,16 @@
     <div class="block2">
         <div class="center">
             <ul id="top_menu">
-                <li id="back" class='invisible icon' onclick="startApp()"><img src="./img/left.png" alt="back"></li>
+                <li id="back" class='invisible icon' onclick="articleRendering.main()"><img src="./img/left.png" alt="back"></li>
                 <li id="up" class='invisible icon' onclick="scroll(0,0)" title="Наверх" ><img src="./img/up.png" width="26" alt="up"></li>
-                <li>ПОЛИТИКА</li>
-                <li>ОБЩЕСТВО</li>
-                <li>СПОРТ</li>
-                <li>ФИНАНСЫ</li>
-                <li>В МИРЕ</li>
-                <li>НАУКА</li>
-                <li>ПРОИСШЕСТВИЯ</li>
-                <li onclick="articleRendering.showFilter()"><img id="filter" src="./img/filter.png" width="20"
-                                                                 height="20" alt="filter"></li>
-                <!--<ul class="sub_menu">-->
-                <!--<li><a href=#>filter 1</a></li>-->
-                <!--<li><a href=#>filter 2</a></li>-->
-                <!--<li><a href=#>filter 3</a></li>-->
-                <!--</ul>-->
-
+                <li onclick ="articleRendering.filterByTag('политика')">ПОЛИТИКА</li>
+                <li onclick ="articleRendering.filterByTag('спорт')">СПОРТ</li>
+                <li onclick ="articleRendering.filterByTag('в мире')">В МИРЕ</li>
+                <li onclick ="articleRendering.filterByTag('наука')">НАУКА</li>
+                <li onclick ="articleRendering.filterByTag('криминал')">КРИМИНАЛ</li>
+                <li onclick ="articleRendering.filterByTag('погода')">ПОГОДА</li>
+                <li onclick="articleRendering.showFilter()"><img id="filter" src="./img/filter.png" width="20" height="20" alt="filter"></li>
             </ul>
-
             <!--<div id="search_box">-->
             <!--<form method="post" name="form_search" id="form_search" action="">-->
             <!--<input type="text" name="txt_search" id="txt_search" placeholder="search..."/>-->
@@ -74,10 +65,9 @@
             <fieldset>
                 <form id="filter-form" action="javascript:articleRendering.filter();" method="get">
                     <input name="author" type="text" placeholder="Автор">
-                    <input name="createdFrom" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                           placeholder="с">
-                    <input name="createdBefore" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                           placeholder="по">
+                    <input name="tags" type="text" placeholder="Тэги">
+                    <input name="createdFrom" type="text" onfocus="(this.type='date')" placeholder="с">
+                    <input name="createdBefore" type="text" onfocus="(this.type='date')" placeholder="по">
                     <input type="submit" value="Показать">
                 </form>
             </fieldset>
@@ -111,7 +101,7 @@
 </div>
 <footer class="footer">
     <div class="center">
-        <a id="project">HNews, 17.05.2017</a>
+        <a id="project">HNews, 28.05.2017</a>
         <a id="creator">logopeddd@inbox.ru<br>Hadanyonok E.V., the 5th group, II course</a>
     </div>
 </footer>
@@ -119,6 +109,5 @@
 <script type="text/javascript" src="http.js"></script>
 <script type="text/javascript" src="scripts.js"></script>
 <script type="text/javascript" src="scroll.js"></script>
-<script src="https://use.fontawesome.com/eb0ca1c71f.js"></script>
 </body>
 </html>

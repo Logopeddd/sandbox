@@ -1,14 +1,12 @@
-const articleModel = (function () {
-    let tagList = ['business', 'sport', 'culture', 'fashion', 'technology', 'science'];
+'use strict';
 
+const articleModel = (function () {
     function validateArticle(article) {
-        if (article.createdAt instanceof Date &&
-            /* typeof article.tag == "object" && article.tag.length >= 1 &&
-             article.tag.length <= 5 &&*/
+        if (typeof article.tags === 'string' && article.author.length > 0 &&
             typeof article.author === 'string' && article.author.length > 0 &&
             typeof article.summary === 'string' && article.summary.length > 0 &&
             typeof article.content === 'string' && article.content.length > 0 &&
-            typeof article.title === 'string' && article.title.length > 0 && article.title.length < 100) {
+            typeof article.title === 'string' && article.title.length > 0) {
             console.log(`validateArticle: article ${article.id} ${article.title} ${article.author} - ok`);
             return true;
         }
@@ -17,7 +15,6 @@ const articleModel = (function () {
     }
 
     return {
-        tagList,
         validateArticle,
     };
 }());
@@ -36,100 +33,32 @@ const articleRendering = (function () {
     function showArticle(item) {
         const news = document.getElementById('news');
         const tab = document.createElement('div');
-        tab.innerHTML = "<div class='tab resize' data-id='" + item._id + "'>" +
-            "<h2 onclick = 'articleRendering.detailView(this.parentNode.dataset.id)' class='button'>" + item.title + "</h2>" +
-            "<img src=" + item.img + ">" +
-            "<p>" + item.summary + "</p>" +
-            "<span class='tags'>" + "#" + item.tags + "</span>" +
-            "<span class='author'>" + item.author + ", " + item.createdAt.toLocaleString("ru", options) + "</span></div>";
+        tab.innerHTML = `<div class='tab resize' data-id=${item._id}>
+            <h2 onclick = 'articleRendering.detailView(this.parentNode.dataset.id)' class='button'>${item.title}</h2>
+            <img src=${item.img}>
+            <p>${item.summary}</p>
+            <span class='tags'>#${item.tags}</span>
+            <span class='author'>${item.author}, ${item.createdAt.toLocaleString('ru', options)}</span></div>`;
         news.appendChild(tab.firstChild);
     }
 
-    // function showFrom(first) {
-    //     const news = document.getElementById('news');
-    //     if (news.lastChild && news.lastChild.classList.contains('pagination')) {
-    //         news.removeChild(news.lastChild);
-    //     }
-    //     articleModel.getArticles(first, first + 12).forEach((item) => {
-    //         showArticle(item);
-    //     });
-    //     const Main = news.firstElementChild;
-    //     Main.classList.add('main');
-    //     Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
-    //     if (first + 11 < articleModel.getArticlesLength()) {
-    //         const tab = document.createElement('div');
-    //         tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
-    //         news.appendChild(tab.firstChild);
-    //     }
-    // }
-    //
-    // function show() {
-    //     // const news = document.getElementById('news');
-    //     // while (news.firstElementChild) {
-    //     //     news.removeChild(news.firstElementChild);
-    //     // }
-    //     document.getElementById('news').innerHTML = '';
-    //     showFrom(0);
-    // }
-
     function showFrom(skip) {
-        dbModel.getArticles(0, 0, {
-            author: document.getElementById('filter-form').author.value,
-            createdFrom: new Date(document.getElementById('filter-form').createdFrom.value),
-            createdBefore: new Date(document.getElementById('filter-form').createdBefore.value),
-        }).then((articles) => {
+        dbModel.getArticles(skip, 13, JSON.parse(localStorage.getItem('filterConfig'))).then((articles) => {
             const news = document.getElementById('news');
             if (news.lastChild && news.lastChild.classList.contains('pagination')) {
                 news.removeChild(news.lastChild);
             }
-            articles.slice(skip, skip + 12).forEach(item => showArticle(item));
-            const Main = news.firstElementChild;
-            Main.classList.add('main');
-            Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
-            if (skip + 12 < articles.length) {
+            articles.slice(0, 12).forEach(item => showArticle(item));
+            if (articles.length > 12) {
+                const Main = news.firstElementChild;
+                Main.classList.add('main');
+                Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
                 const tab = document.createElement('div');
                 tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
                 news.appendChild(tab.firstChild);
             }
         });
     }
-
-    // function showFrom(first) {
-    //     // const filter = document.getElementById('filter-form');
-    //     // let filterConfig;
-    //     //             if (typeof filter.author === 'string' && filter.author.length > 0) {
-    //     //                 filterConfig.author = filter.author;
-    //     //             }
-    //     //             if (filter.createdFrom != 'Invalid Date') {
-    //     //                 filterConfig
-    //     //             }
-    //     //             if (filterConfig.createdBefore != 'Invalid Date') {
-    //     //                 filtered = filtered.filter(item =>
-    //     //                     (item.createdAt.getTime() < filterConfig.createdBefore.getTime()));
-    //     //             }
-    //
-    //     dbModel.getArticles(first).then((articles) => {
-    //         console.log(articles);
-    //         const news = document.getElementById('news');
-    //         if (news.lastChild && news.lastChild.classList.contains('pagination')) {
-    //             news.removeChild(news.lastChild);
-    //         }
-    //         for (let i = 0; i < 12 && i < articles.length; i++) {
-    //             showArticle(articles[i]);
-    //         }
-    //         // articles.forEach((item) => {
-    //         //     showArticle(item);
-    //         // });
-    //         const Main = news.firstElementChild;
-    //         Main.classList.add('main');
-    //         Main.firstChild.textContent = Main.firstChild.textContent.toUpperCase();
-    //         if (first + 11 < articles.length) {
-    //             const tab = document.createElement('div');
-    //             tab.innerHTML = '<div class="tab resize pagination"><a onclick="articleRendering.showMore()" class="button">Показать ещё...</a> </div>';
-    //             news.appendChild(tab.firstChild);
-    //         }
-    //     });
-    // }
 
     function showMore() {
         dbModel.getArticles().then((articles) => {
@@ -147,7 +76,7 @@ const articleRendering = (function () {
     function signIn() {
         const username = document.getElementById('login-form').login.value;
         const password = document.getElementById('login-form').password.value;
-        dbModel.logIn({username, password}).then(
+        dbModel.logIn({ username, password }).then(
             () => {
                 btnCheck();
                 document.getElementById('glass').classList.add('invisible');
@@ -177,8 +106,9 @@ const articleRendering = (function () {
         document.getElementById('filter-form').author.value = '';
         document.getElementById('filter-form').createdFrom.value = '';
         document.getElementById('filter-form').createdBefore.value = '';
-        document.getElementById('news').innerHTML = '';
-
+        document.getElementById('filter-form').tags.value = '';
+        scroll(localStorage.getItem('scrollX'), localStorage.getItem('scrollY'));
+        // document.getElementById('news').innerHTML = '';
     }
 
     function showFilter() {
@@ -188,23 +118,47 @@ const articleRendering = (function () {
     }
 
     function filter() {
+        const config = {};
+        if (document.getElementById('filter-form').author.value !== '') {
+            config.author = document.getElementById('filter-form').author.value;
+        }
+        if (document.getElementById('filter-form').createdFrom.value !== '' || document.getElementById('filter-form').createdBefore.value !== '') {
+            config.createdAt = {};
+            if (document.getElementById('filter-form').createdFrom.value !== '') {
+                config.createdAt.$gte = new Date(document.getElementById('filter-form').createdFrom.value);
+            }
+            if (document.getElementById('filter-form').createdBefore.value !== '') {
+                config.createdAt.$lt = (new Date(document.getElementById('filter-form').createdBefore.value).valueOf() + 86400000);
+            }
+        }
+        if (document.getElementById('filter-form').tags.value !== '') config.tags = document.getElementById('filter-form').tags.value;
         document.getElementById('news').innerHTML = '';
+        localStorage.setItem('filterConfig', JSON.stringify(config));
+        articleRendering.showFrom(0);
+        main();
+    }
+
+    function filterByTag(tag) {
+        document.getElementById('news').innerHTML = '';
+        localStorage.setItem('filterConfig', JSON.stringify({tags: tag}));
         articleRendering.showFrom(0);
         main();
     }
 
     function detailView(id) {
         dbModel.getArticle(id).then((item) => {
+            localStorage.setItem('scrollX', window.pageXOffset);
+            localStorage.setItem('scrollY', window.pageYOffset);
             const tab = document.getElementById('article-tab');
-            tab.innerHTML = '<h1>' + item.title + '</h1>' +
-                '<img src=' + item.img + '>' +
-                '<p>' + item.content + '</p>' +
-                '<input class = "admin-button" type="button" onclick="articleRendering.showEditPage(\'' + item._id + '\')" value="Редактировать">' +
-                '<input class = "admin-button" type="button" onclick="articleRendering.remove(\'' + item._id + '\')" value="Удалить">' +
-                '<span class="author">' + "#" + item.tags + "<br />" + item.author + ', ' + item.createdAt.toLocaleString("ru", options) + '</span> '
-            ;
+            tab.innerHTML = `<h1>${item.title}</h1>
+                <img src=${item.img}>
+                <p>${item.content}</p>
+                <input class = 'admin-button' type='button' onclick="articleRendering.showEditPage('${item._id}')" value='Редактировать'>
+                <input class = 'admin-button' type='button' onclick="articleRendering.remove('${item._id}')" value='Удалить'>
+                <span class='author'>#${item.tags}<br/>${item.author}, ${item.createdAt.toLocaleString('ru', options)}</span>`;
             document.getElementById('news').classList.add('invisible');
             btnCheck();
+            scroll(0, 0);
             tab.classList.remove('invisible');
             document.getElementById('back').classList.remove('invisible');
         });
@@ -232,7 +186,7 @@ const articleRendering = (function () {
             document.getElementById('edit-form').image.value = item.img;
             document.getElementById('edit-form').paragraph.value = item.content;
             document.getElementById('edit-form').tags.value = item.tags;
-            document.getElementById('edit-form').setAttribute('action', "javascript:articleRendering.edit('" + id + "')");
+            document.getElementById('edit-form').setAttribute('action', `javascript:articleRendering.edit('${id}')`);
             document.getElementById('edit-article').classList.remove('invisible');
             document.getElementById('back').classList.remove('invisible');
         });
@@ -306,6 +260,7 @@ const articleRendering = (function () {
         logOut,
         showFilter,
         filter,
+        filterByTag,
         showAddPage,
         showEditPage,
         detailView,
@@ -317,7 +272,10 @@ const articleRendering = (function () {
 }());
 
 function startApp() {
+    localStorage.clear();
     articleRendering.main();
+    localStorage.clear();
+    document.getElementById('news').innerHTML = '';
     articleRendering.showFrom(0);
 }
 startApp();

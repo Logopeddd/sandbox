@@ -1,3 +1,5 @@
+'use strict';
+
 const dbModel = (function () {
     function getArticle(id) {
         return new Promise((resolve, reject) => {
@@ -18,7 +20,7 @@ const dbModel = (function () {
         });
     }
 
-    function getArticles(skip, top, filterConfig) {
+    function getArticles(skip, top, config) {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
             req.open('PUT', '/articles');
@@ -34,7 +36,7 @@ const dbModel = (function () {
             req.onerror = () => {
                 reject(new Error('Error'));
             };
-            req.send(JSON.stringify({ skip, top, filterConfig }));
+            req.send(JSON.stringify({ skip, top, config }));
         });
     }
 
@@ -139,7 +141,6 @@ const dbModel = (function () {
     }
 
     return {
-        // getArray,
         getArticle,
         getArticles,
         editArticle,
