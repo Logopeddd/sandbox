@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const db = mongoose.createConnection('mongodb://localhost/1');
+const db = mongoose.createConnection('mongodb://admin:admin@ds155411.mlab.com:55411/hnewsdb');
 
 db.on('error', err => console.log('connection error to DB.', err.message));
 db.once('open', callback => console.log('connected to DB'));

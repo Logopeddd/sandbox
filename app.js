@@ -8,7 +8,7 @@ const users = require('./db.js').users;
 const Articles = require('./db.js').articles;
 
 const app = express();
-const store = new SessionStore({ url: 'mongodb://localhost/1' });
+const store = new SessionStore({ url: 'mongodb://admin:admin@ds155411.mlab.com:55411/hnewsdb' });
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static(`${__dirname}/public`));
